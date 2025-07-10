@@ -209,6 +209,8 @@ const Register = () => {
       if (data.id) {
         // Assuming your API returns the new user's ID on success
         localStorage.setItem("userId", data.id);
+      } else {
+        console.warn("Registration API did not return user ID.");
       }
       // END NEW
 
