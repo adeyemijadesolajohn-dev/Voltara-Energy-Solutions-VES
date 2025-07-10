@@ -3,7 +3,7 @@ import "./LandingPage.scss";
 import "../../App.scss";
 import { Link } from "react-router-dom";
 import { Icons, Socials, Public } from "../../data/Assets";
-import ImageSlider from "../../components/imageSlider/imageSlider";
+import ImageSlider from "../../components/imageSlider/ImageSlider";
 
 const menuItems = ["Main", "About", "Services", "Contact"];
 const meterTypes = ["Smart Meters", "Static Meters", "Electronic Meters"];
