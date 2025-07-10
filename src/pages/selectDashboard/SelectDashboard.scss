@@ -1,0 +1,100 @@
+.selectDashboardOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3.5rem;
+  margin: 3.5rem;
+
+  .selectDashboardCard {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--secondaryColor);
+    color: var(--primaryColor);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    transition: 0.35s ease-in-out;
+
+    &:hover {
+      background-color: var(--primaryColor);
+      color: var(--secondaryColor);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      transform: scale(1.1);
+      transition: 0.35s ease-in-out;
+    }
+
+    .imgIcon {
+      font-size: 120px;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+
+    .loginBGDiv {
+      display: none;
+    }
+
+    .formDiv {
+      flex-basis: 100%;
+      transform: none;
+
+      .selectDashboardOptions {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
+        justify-items: center;
+        width: 88%;
+      }
+
+      .selectDashboardCard {
+        width: 100%;
+        max-width: 180px;
+        padding: 1.2rem;
+        text-align: center;
+      }
+
+      .headerDiv {
+        padding: 0 1rem;
+
+        .header {
+          font-size: 28px;
+        }
+
+        .subHeader {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .formDiv {
+    .selectDashboardOptions {
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+    }
+
+    .selectDashboardCard {
+      max-width: 100%;
+    }
+
+    .headerDiv {
+      .header {
+        font-size: 24px;
+      }
+
+      .subHeader {
+        font-size: 13px;
+      }
+    }
+  }
+}

@@ -1,0 +1,401 @@
+.landingPage {
+  width: 100vw;
+  height: 100vh;
+
+  .landingContainer {
+    color: var(--whiteColor);
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+
+    /* ───────── NAV BAR ───────── */
+    .navBar {
+      position: fixed;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 7px 35px;
+      backdrop-filter: blur(10px);
+      width: 100%;
+      border-bottom: 1px solid var(--secondaryColor);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.35);
+
+      /* ─── Logo ─── */
+      .navLogo {
+        display: flex;
+        align-items: flex-end;
+        border: 2px inset var(--secondaryColor);
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        padding: 5px;
+        background-color: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+        transition: transform 0.35s ease-in-out;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        img {
+          height: 55px;
+          width: 55px;
+          object-fit: cover;
+        }
+        .navLogoText {
+          h4 {
+            font-size: 20px;
+            color: var(--primaryColor);
+            font-weight: 800;
+            margin-top: -12px;
+          }
+          p {
+            font-size: 10px;
+            color: var(--secondaryColor);
+            font-weight: 500;
+            margin-top: -8px;
+            padding-bottom: 2px;
+            -webkit-text-stroke: 0.35px var(--primaryColor);
+          }
+        }
+      }
+
+      /* ─── Links / social / auth container ─── */
+      .navLinks {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        transition: transform 0.4s ease-in-out; /* needed for drawer slide */
+
+        .sideBarUpper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 20px;
+
+          /* Menu list */
+          .menuBar {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+
+            .menuBarItems {
+              color: var(--whiteColor);
+              height: 55px;
+              font-size: 1rem;
+              transition: all 0.35s ease-in-out;
+              padding: 10px 15px;
+              border-radius: 5.5px;
+              font-weight: 555;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              .menuBarLink {
+                color: var(--whiteColor);
+                text-decoration: none;
+                transition: all 0.35s ease-in-out;
+                padding: 10px 15px;
+              }
+
+              /* Chevron animations for dropdown */
+              .chevronDown {
+                display: block;
+                font-size: 20px;
+                animation: rotateBack 0.2s linear;
+                transform: rotate(0deg);
+                transform-origin: center center;
+                transition: all 0.35s ease-in-out;
+
+                @keyframes rotateBack {
+                  from {
+                    transform: rotate(180deg);
+                  }
+                  to {
+                    transform: rotate(360deg);
+                  }
+                }
+
+                .arrowDown {
+                  animation-name: bounce;
+                  animation-duration: 0.35s;
+                  animation-direction: alternate;
+                  animation-timing-function: cubic-bezier(0, 0.05, 1, 0.5);
+                  animation-iteration-count: infinite;
+
+                  @keyframes bounce {
+                    from {
+                      transform: translate3d(0, 0, 0);
+                    }
+                    to {
+                      transform: translate3d(0, 8px, 0);
+                    }
+                  }
+                }
+              }
+
+              &:hover {
+                background-color: var(--secondaryColor);
+                transform: scale(1.1);
+
+                .menuBarLink {
+                  color: var(--primaryColor);
+                  text-decoration: underline;
+                }
+                .chevronDown {
+                  font-size: 20px;
+                  color: var(--primaryColor);
+                  animation: rotate 0.2s linear;
+                  transform: rotate(180deg);
+
+                  @keyframes rotate {
+                    from {
+                      transform: rotate(0deg);
+                    }
+                    to {
+                      transform: rotate(180deg);
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .navLogin {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+          }
+        }
+
+        /* Social icons */
+        .navSocials {
+          display: flex;
+          gap: 8px;
+          a img {
+            height: 35px;
+            width: 35px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.35s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+            border: 2px solid var(--secondaryColor);
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+    }
+
+    /* ───────── HERO ───────── */
+    .largeStatement {
+      .statement {
+        width: 70%;
+        font-size: 35px;
+        font-weight: 700;
+        margin: 120px auto 0;
+        line-height: 1.2;
+        text-align: center;
+      }
+    }
+
+    /* ───────── FOOTER ───────── */
+    .footer {
+      background-color: var(--secondaryColor);
+      color: var(--primaryColor);
+      width: 100%;
+
+      .footerContainer {
+        padding: 20px 35px 7px;
+
+        .footerContent {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          justify-content: space-between;
+          align-items: start;
+
+          .footerList {
+            h3 {
+              font-size: 12px;
+              font-weight: 700;
+              margin-bottom: 1rem;
+            }
+            p {
+              font-size: 12px;
+              font-weight: 500;
+              margin-bottom: 0.5rem;
+            }
+            img {
+              height: 20px;
+              width: 20px;
+              object-fit: cover;
+              border-radius: 7px;
+              transition: transform 0.35s ease-in-out;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.55);
+              border: 2px solid var(--secondaryColor);
+              &:hover {
+                transform: scale(2);
+              }
+            }
+            .footerContact {
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+            }
+          }
+        }
+
+        .footerBottom {
+          font-size: 12px;
+          font-weight: 500;
+          margin-top: 7px;
+          padding-top: 7px;
+          border-top: 2px solid var(--primaryColor);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          a {
+            color: var(--primaryColor);
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ───────── UTILITY SECTIONS FOR FOOTER ───────── */
+.footSocials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+.footMiddle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.footRight {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.footVoltara {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+/* Burger icon */
+.sideMenuIcon {
+  display: none;
+  position: absolute;
+  top: 22px;
+  right: 35px;
+  font-size: 35px;
+  color: var(--whiteColor);
+  cursor: pointer;
+  transition: transform 0.35s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+/* ------------------------------------------------------------------
+       BREAKPOINT 1 — tablet & below (≤963px)
+    -------------------------------------------------------------------*/
+@media (max-width: 963px) {
+  /* Show burger */
+  .sideMenuIcon {
+    display: block;
+    z-index: 1001;
+  }
+
+  /* Turn .navLinks into an off‑canvas drawer */
+  .navLinks {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 222px;
+    height: 100vh;
+    flex-direction: column;
+    padding-block: 13.5px;
+    color: var(--primaryColor);
+    border-left: 2px outset rgba(245, 245, 245, 0.7);
+    background-color: var(--primaryColor);
+    backdrop-filter: blur(10px);
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.35);
+    transform: translateX(100%);
+    &.show {
+      transform: translateX(0);
+    }
+  }
+
+  .sideBarUpper {
+    flex-direction: column;
+    color: var(--primaryColor);
+  }
+  .menuBar {
+    flex-direction: column;
+    color: var(--primaryColor);
+
+    width: 100%;
+  }
+  .menuBarItems {
+    width: 100%;
+    padding: 0 35px;
+    font-size: 1.35rem;
+    justify-content: space-between;
+    color: var(--primaryColor);
+  }
+  .navLogin {
+    margin: 20px 0;
+  }
+
+  /* Responsive hero text */
+  .largeStatement .statement {
+    width: 90%;
+    font-size: clamp(22px, 6vw, 32px);
+  }
+
+  /* Footer grid tighter */
+  .footer .footerContainer .footerContent {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 24px;
+  }
+}
+
+/* ------------------------------------------------------------------
+       BREAKPOINT 2 — very small phones (≤600px)
+    -------------------------------------------------------------------*/
+@media (max-width: 600px) {
+  .navLogo img {
+    height: 42px;
+    width: 42px;
+  }
+  .navLogoText h4 {
+    font-size: 18px;
+  }
+  .navLogoText p {
+    font-size: 9px;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}

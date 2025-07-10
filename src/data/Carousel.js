@@ -1,0 +1,136 @@
+import { Images } from "./Assets";
+
+export const Carousel = [
+  {
+    id: 1,
+    image: Images.image1,
+    title: "Image 1",
+    description: "Description for Image 1",
+  },
+  {
+    id: 2,
+    image: Images.image2,
+    title: "Image 2",
+    description: "Description for Image 2",
+  },
+  {
+    id: 3,
+    image: Images.image3,
+    title: "Image 3",
+    description: "Description for Image 3",
+  },
+  {
+    id: 4,
+    image: Images.image4,
+    title: "Image 4",
+    description: "Description for Image 4",
+  },
+  {
+    id: 5,
+    image: Images.image5,
+    title: "Image 5",
+    description: "Description for Image 5",
+  },
+  {
+    id: 6,
+    image: Images.image6,
+    title: "Image 6",
+    description: "Description for Image 6",
+  },
+  {
+    id: 7,
+    image: Images.image7,
+    title: "Image 7",
+    description: "Description for Image 7",
+  },
+  {
+    id: 8,
+    image: Images.image8,
+    title: "Image 8",
+    description: "Description for Image 8",
+  },
+  {
+    id: 9,
+    image: Images.image9,
+    title: "Image 9",
+    description: "Description for Image 9",
+  },
+  {
+    id: 10,
+    image: Images.image10,
+    title: "Image 10",
+    description: "Description for Image 10",
+  },
+  {
+    id: 11,
+    image: Images.image11,
+    title: "Image 11",
+    description: "Description for Image 11",
+  },
+  {
+    id: 12,
+    image: Images.image12,
+    title: "Image 12",
+    description: "Description for Image 12",
+  },
+  {
+    id: 13,
+    image: Images.image13,
+    title: "Image 13",
+    description: "Description for Image 13",
+  },
+  {
+    id: 14,
+    image: Images.image14,
+    title: "Image 14",
+    description: "Description for Image 14",
+  },
+  {
+    id: 15,
+    image: Images.image15,
+    title: "Image 15",
+    description: "Description for Image 15",
+  },
+  {
+    id: 16,
+    image: Images.image16,
+    title: "Image 16",
+    description: "Description for Image 16",
+  },
+  {
+    id: 17,
+    image: Images.image17,
+    title: "Image 17",
+    description: "Description for Image 17",
+  },
+  {
+    id: 18,
+    image: Images.image18,
+    title: "Image 18",
+    description: "Description for Image 18",
+  },
+  {
+    id: 19,
+    image: Images.image19,
+    title: "Image 19",
+    description: "Description for Image 19",
+  },
+  {
+    id: 20,
+    image: Images.image20,
+    title: "Image 20",
+    description: "Description for Image 20",
+  },
+  {
+    id: 21,
+    image: Images.image21,
+    title: "Image 21",
+    description: "Description for Image 21",
+  },
+  {
+    id: 22,
+    image: Images.image22,
+    title: "Image 22",
+    description: "Description for Image 22",
+  },
+];

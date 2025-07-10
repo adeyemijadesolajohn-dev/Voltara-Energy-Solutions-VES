@@ -1,0 +1,348 @@
+// ---------- SCSS helpers ----------
+$transition: 0.35s ease-in-out;
+
+@mixin trans {
+  transition: $transition;
+}
+
+@mixin flex-center($dir: row, $justify: center, $align: center) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+%input-base {
+  @include trans;
+  width: 350px;
+  padding: 1rem 3.5rem;
+  font-size: 12px;
+  font-weight: 555;
+  border: 2px solid var(--secondaryColor);
+  border-radius: 20px;
+  background-color: transparent;
+  outline: none;
+  color: var(--inputColor);
+
+  &::placeholder {
+    opacity: 0;
+    @include trans;
+    font-size: 13.5px;
+  }
+
+  &:hover {
+    border-color: var(--primaryColor);
+    color: var(--primaryColor);
+
+    &::placeholder {
+      color: var(--primaryColor);
+      opacity: 1;
+    }
+  }
+
+  &:focus,
+  &:valid {
+    border-color: var(--primaryColor);
+  }
+
+  &:focus-visible {
+    border-color: var(--primaryColor);
+    color: var(--primaryColor);
+
+    &::placeholder {
+      opacity: 1;
+      color: var(--inputColorLight);
+      font-size: 12px;
+    }
+  }
+}
+
+// ---------- Main wrapper ----------
+.loginPage {
+  min-height: 100vh;
+  width: 100vw;
+  margin: auto;
+  overflow: hidden;
+  @include flex-center();
+  background-color: var(--whiteColor);
+  @include trans;
+
+  // ---------- Container ----------
+  .container {
+    @include flex-center(row, space-between, center);
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--whiteColor);
+    position: relative;
+    @include trans;
+
+    // ---------- Left – Hero / Background ----------
+    .loginBGDiv {
+      position: relative;
+      @include flex-center(column);
+      flex-basis: 70%;
+      height: 100%;
+      padding: 5.5rem;
+      box-sizing: border-box;
+      overflow: hidden;
+      @include trans;
+
+      img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .loginBGText {
+        @include flex-center(column);
+        height: 100%;
+        width: 100%;
+        position: relative;
+
+        .loginBGHeading {
+          color: var(--whiteColor);
+          font-size: 35px;
+          font-weight: 800;
+          @include trans;
+        }
+
+        p {
+          color: var(--whiteColor);
+          padding: 1rem;
+          font-size: 20px;
+          font-weight: 200;
+          @include trans;
+        }
+      }
+    }
+
+    // ---------- Right – Form ----------
+    .formDiv {
+      flex-basis: 50%;
+      @include flex-center(column);
+      transform: translateY(-1rem);
+      @include trans;
+
+      // Logo & welcome text
+      .headerDiv {
+        text-align: center;
+        @include trans;
+
+        .logo {
+          @include flex-center(column);
+
+          img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+          }
+
+          h4 {
+            margin-top: -12px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primaryColor);
+          }
+
+          p {
+            margin-top: -8px;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--secondaryColor);
+            -webkit-text-stroke: 0.35px var(--primaryColor);
+          }
+        }
+
+        h3 {
+          font-size: 35px;
+          font-weight: 700;
+          color: var(--primaryColor);
+        }
+      }
+
+      // ------ Form core ------
+      .form {
+        display: grid;
+        gap: 0.5rem;
+        @include trans;
+
+        h2 {
+          font-size: 22px;
+          font-weight: 700;
+          color: var(--primaryColor);
+        }
+
+        // ----- Input wrapper -----
+        .inputDiv {
+          .input {
+            position: relative;
+            margin-bottom: 1rem;
+            @include trans;
+
+            label,
+            .icon,
+            .eye {
+              position: absolute;
+              font-size: 20px;
+              color: var(--inputColorLight);
+              @include trans;
+            }
+
+            label {
+              top: 50%;
+              left: 40px;
+              transform: translateY(-50%);
+              font-size: 13.5px;
+              font-weight: 555;
+              pointer-events: none;
+            }
+
+            .icon {
+              left: 10px;
+            }
+            .eye {
+              right: 10px;
+              cursor: pointer;
+            }
+
+            input {
+              @extend %input-base;
+              padding-right: 3rem; // eye icon space
+
+              /* to combat browser autofill background */
+              &:-webkit-autofill,
+              &:-webkit-autofill:hover,
+              &:-webkit-autofill:focus,
+              &:-webkit-autofill:active {
+                -webkit-box-shadow: 0 0 0px 1000px var(--whiteColor) inset !important; /* Forces white background */
+                -webkit-text-fill-color: var(
+                  --inputColor
+                ) !important; /* Keeps your text color */
+                transition: background-color 5000s ease-in-out 0s; /* A hack to make the transition very slow, effectively hiding it */
+              }
+
+              /* specific color for focus/valid that should also override autofill */
+              &:focus:-webkit-autofill,
+              &:valid:-webkit-autofill {
+                -webkit-text-fill-color: var(
+                  --primaryColor
+                ) !important; /* Example: text turns primary color on focus/valid even with autofill */
+              }
+
+              &:hover ~ label {
+                opacity: 0;
+              }
+
+              &:hover ~ .icon,
+              &:hover ~ .eye,
+              &:focus ~ .icon,
+              &:focus ~ .eye,
+              &:valid ~ .icon,
+              &:valid ~ .eye {
+                color: var(--primaryColor);
+              }
+
+              &:focus ~ label,
+              &:valid ~ label {
+                top: 0;
+                left: 20px;
+                font-size: 11px;
+                background-color: var(--whiteColor);
+                padding: 0 5px;
+                opacity: 1;
+                color: var(--primaryColor);
+              }
+            }
+          }
+        }
+
+        // Remember / Forgot row
+        .rememberForgot {
+          @include flex-center(row, space-between, center);
+          font-size: 12px;
+          margin: -8px 5.5px 2px;
+
+          label {
+            font-weight: 555;
+
+            input {
+              margin-right: 5px;
+              accent-color: var(--primaryColor);
+            }
+          }
+
+          a {
+            color: var(--blackColor);
+            text-decoration: none;
+            @include trans;
+
+            &:hover {
+              color: var(--linkColor);
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .errorMessage {
+          color: #dc3545;
+          font-size: 0.7rem;
+          margin-top: 12px;
+          text-align: center;
+          font-weight: 555;
+        }
+
+        // Submit button reused elsewhere
+        .btn {
+          @include flex-center();
+          width: 350px;
+          padding: 0.9rem 0;
+          border-radius: 20px;
+          background-color: var(--primaryColor);
+          color: var(--whiteColor);
+          border: 2px solid transparent;
+          font-weight: 700;
+          cursor: pointer;
+          @include trans;
+
+          &:hover {
+            background-color: var(--secondaryColor);
+            color: var(--primaryColor);
+            border: 2px solid var(--primaryColor);
+            transition: 0.35s ease-in-out;
+          }
+        }
+      }
+
+      // Register link
+      .registerLinkDiv {
+        font-size: 12px;
+        a {
+          color: var(--primaryColor);
+          text-decoration: none;
+          @include trans;
+
+          &:hover {
+            color: var(--linkColor);
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  // ---------- Responsive tweaks ----------
+  @media (max-width: 1024px) {
+    .container {
+      .loginBGDiv {
+        display: none;
+      }
+      .formDiv {
+        flex-basis: 100%;
+        transform: none;
+      }
+    }
+  }
+}

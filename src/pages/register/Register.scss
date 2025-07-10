@@ -1,0 +1,462 @@
+.registerPage {
+  min-height: 100vh;
+  width: 100vw;
+  margin: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--whiteColor);
+  transition: all 0.35s ease-in-out;
+
+  .container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--whiteColor);
+    position: relative;
+    transition: all 0.35s ease-in-out;
+
+    .loginBGDiv {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-basis: 70%;
+      height: 100%;
+      padding: 5.5rem;
+      box-sizing: border-box;
+      overflow: hidden;
+      transition: all 0.35s ease-in-out;
+
+      img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .loginBGText {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        transition: all 0.35s ease-in-out;
+
+        .loginBGHeading {
+          color: var(--whiteColor);
+          font-size: 35px;
+          font-weight: 800;
+          transition: all 0.35s ease-in-out;
+        }
+
+        p {
+          color: var(--whiteColor);
+          padding: 1rem;
+          font-size: 20px;
+          font-weight: 200;
+          transition: all 0.35s ease-in-out;
+        }
+      }
+    }
+
+    .formDiv {
+      flex-basis: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(-1rem);
+      text-align: center;
+      transition: all 0.35s ease-in-out;
+
+      .headerDiv {
+        text-align: center;
+        transition: all 0.35s ease-in-out;
+
+        .logo {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          transition: all 0.35s ease-in-out;
+
+          img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            transition: all 0.35s ease-in-out;
+          }
+
+          h4 {
+            margin-top: -12px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primaryColor);
+            transition: all 0.35s ease-in-out;
+          }
+
+          p {
+            margin-top: -8px;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--secondaryColor);
+            -webkit-text-stroke: 0.35px var(--primaryColor);
+            transition: all 0.35s ease-in-out;
+          }
+        }
+
+        h3 {
+          font-size: 35px;
+          font-weight: 700;
+          color: var(--primaryColor);
+          transition: all 0.35s ease-in-out;
+        }
+      }
+
+      .form {
+        display: grid;
+        place-items: center;
+        gap: 0.5rem;
+        transition: all 0.35s ease-in-out;
+
+        h2 {
+          font-size: 22px;
+          font-weight: 700;
+          color: var(--primaryColor);
+          transition: all 0.35s ease-in-out;
+        }
+
+        .inputDiv {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .input {
+            position: relative;
+            margin-bottom: 1rem;
+            transition: all 0.35s ease-in-out;
+            // border: 2px solid var(--secondaryColor);
+            border-radius: 20px;
+            width: 350px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+
+            &.valid-border {
+              box-shadow: 0 0 5px rgba(40, 167, 69, 1);
+              transition: all 0.35s ease-in-out;
+            }
+
+            &.error {
+              box-shadow: 0 0 5px rgba(220, 53, 69, 1);
+              transition: all 0.35s ease-in-out;
+            }
+
+            label,
+            .icon,
+            .eye {
+              position: absolute;
+              font-size: 20px;
+              color: var(--inputColorLight);
+              transition: all 0.35s ease-in-out;
+            }
+
+            label {
+              top: 50%;
+              left: 40px;
+              transform: translateY(-50%);
+              font-size: 13.5px;
+              font-weight: 555;
+              pointer-events: none;
+              transition: all 0.35s ease-in-out;
+              background-color: var(--whiteColor);
+              padding: 0 7px;
+              z-index: 2;
+            }
+
+            .icon {
+              left: 10px;
+              z-index: 1;
+              transition: all 0.35s ease-in-out;
+            }
+
+            .eye {
+              right: 20px;
+              top: 50%;
+              transform: translateY(-50%);
+              cursor: pointer;
+              z-index: 1;
+              transition: all 0.35s ease-in-out;
+            }
+
+            input {
+              width: 100%;
+              padding: 1rem 3.5rem 1rem 3rem;
+              font-size: 12px;
+              font-weight: 555;
+              border: 2px solid var(--secondaryColor);
+              border-radius: 20px;
+              background-color: transparent;
+              outline: none;
+              color: var(--inputColor);
+              transition: all 0.35s ease-in-out;
+
+              /* to combat browser autofill background */
+              &:-webkit-autofill,
+              &:-webkit-autofill:hover,
+              &:-webkit-autofill:focus,
+              &:-webkit-autofill:active {
+                -webkit-box-shadow: 0 0 0px 1000px var(--whiteColor) inset !important; /* Forces white background */
+                -webkit-text-fill-color: var(
+                  --inputColor
+                ) !important; /* Keeps your text color */
+                transition: background-color 5000s ease-in-out 0s; /* A hack to make the transition very slow, effectively hiding it */
+              }
+
+              /* specific color for focus/valid that should also override autofill */
+              &:focus:-webkit-autofill,
+              &:valid:-webkit-autofill {
+                -webkit-text-fill-color: var(
+                  --primaryColor
+                ) !important; /* Example: text turns primary color on focus/valid even with autofill */
+              }
+
+              &::placeholder {
+                opacity: 0;
+                font-size: 13.5px;
+                transition: all 0.35s ease-in-out;
+              }
+
+              &:hover {
+                border-color: var(--primaryColor);
+                color: var(--primaryColor);
+                transition: all 0.35s ease-in-out;
+
+                &::placeholder {
+                  color: var(--primaryColor);
+                  opacity: 1;
+                  transition: all 0.35s ease-in-out;
+                }
+              }
+
+              &:focus,
+              &:valid {
+                border-color: var(--primaryColor);
+                transition: all 0.35s ease-in-out;
+              }
+
+              &:focus-visible {
+                color: var(--primaryColor);
+                transition: all 0.35s ease-in-out;
+
+                &::placeholder {
+                  opacity: 1;
+                  color: var(--inputColorLight);
+                  font-size: 12px;
+                  transition: all 0.35s ease-in-out;
+                }
+              }
+
+              &:hover ~ label {
+                opacity: 0;
+                transition: all 0.35s ease-in-out;
+              }
+
+              &:hover ~ .icon,
+              &:hover ~ .eye,
+              &:focus ~ .icon,
+              &:focus ~ .eye,
+              &:valid ~ .icon,
+              &:valid ~ .eye {
+                color: var(--primaryColor);
+                transition: all 0.35s ease-in-out;
+              }
+
+              &:focus ~ label,
+              &:valid ~ label {
+                top: 0;
+                left: 20px;
+                font-size: 11px;
+                background-color: var(--whiteColor);
+                padding: 0 5px;
+                opacity: 1;
+                color: var(--primaryColor);
+                transition: all 0.35s ease-in-out;
+              }
+            }
+          }
+
+          .errorMsg {
+            color: #dc3545;
+            font-size: 0.7em;
+            margin-top: -0.7rem;
+            margin-bottom: 0.35rem;
+            text-align: center;
+            width: 350px;
+          }
+
+          .password-guide {
+            width: 350px;
+            text-align: left;
+            padding-left: 7px;
+            margin-top: -0.7rem;
+            box-sizing: border-box;
+
+            p {
+              display: flex;
+              align-items: center;
+              font-size: 0.7em;
+              margin-bottom: 0.2em;
+              transition: all 0.35s ease-out;
+              overflow: hidden;
+              height: auto;
+              line-height: 1.35;
+            }
+
+            .guide-icon {
+              margin-right: 7px;
+              font-size: 0.7em;
+            }
+
+            & p.invalid {
+              color: #6c757d;
+            }
+
+            & p.valid {
+              color: #28a745;
+            }
+          }
+        }
+
+        .rememberForgot {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 12px;
+          margin: -8px 5.5px 2px;
+          width: 100%;
+          max-width: 350px;
+          transition: all 0.35s ease-in-out;
+
+          label {
+            font-weight: 555;
+            transition: all 0.35s ease-in-out;
+
+            input {
+              margin-right: 5px;
+              accent-color: var(--primaryColor);
+              transition: all 0.35s ease-in-out;
+            }
+          }
+
+          a {
+            color: var(--blackColor);
+            text-decoration: none;
+            transition: all 0.35s ease-in-out;
+
+            &:hover {
+              color: var(--linkColor);
+              text-decoration: underline;
+              transition: all 0.35s ease-in-out;
+            }
+          }
+        }
+
+        .termsConditions {
+          display: flex;
+          font-size: 12px;
+          max-width: 350px;
+          transition: all 0.35s ease-in-out;
+
+          label {
+            display: flex;
+            gap: 0.5rem;
+            transition: all 0.35s ease-in-out;
+
+            input {
+              accent-color: var(--primaryColor);
+              transition: all 0.35s ease-in-out;
+            }
+
+            .link {
+              color: var(--primaryColor);
+              text-decoration: none;
+              transition: all 0.35s ease-in-out;
+
+              &:hover {
+                color: var(--linkColor);
+                text-decoration: underline;
+                transition: all 0.35s ease-in-out;
+              }
+            }
+          }
+        }
+
+        .btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 350px;
+          padding: 0.9rem 0;
+          border-radius: 20px;
+          background-color: var(--primaryColor);
+          color: var(--whiteColor);
+          border: 2px solid transparent;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.35s ease-in-out;
+
+          &:hover {
+            background-color: var(--secondaryColor);
+            color: var(--primaryColor);
+            border: 2px solid var(--primaryColor);
+            transition: all 0.35s ease-in-out;
+          }
+        }
+      }
+
+      .registerLinkDiv {
+        font-size: 12px;
+        transition: all 0.35s ease-in-out;
+
+        .link {
+          color: var(--primaryColor);
+          text-decoration: none;
+          transition: all 0.35s ease-in-out;
+
+          &:hover {
+            color: var(--linkColor);
+            text-decoration: underline;
+            transition: all 0.35s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .container {
+      flex-direction: column;
+      transition: all 0.35s ease-in-out;
+
+      .loginBGDiv {
+        display: none;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .formDiv {
+        flex-basis: 100%;
+        transform: none;
+        transition: all 0.35s ease-in-out;
+      }
+    }
+  }
+}

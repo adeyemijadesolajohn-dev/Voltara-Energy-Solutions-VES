@@ -1,0 +1,247 @@
+.sliderContainer {
+  position: relative;
+  width: 100vw;
+  max-width: 1200px;
+  margin: 0px auto;
+  background-color: transparent;
+  border-radius: 7px;
+  transition: all 0.35s ease-in-out;
+
+  /* Override slick's default focus outline */
+  :global(.slick-slide:focus) {
+    outline: none !important;
+    transition: all 0.35s ease-in-out;
+  }
+}
+
+.imageSlideWrapper {
+  box-sizing: border-box;
+  transition: all 0.35s ease-in-out;
+}
+
+.imageWrapper {
+  position: relative;
+  height: 200px; /* Fixed height for consistent image size */
+  overflow: hidden;
+  border-radius: 7px;
+  transition: all 0.35s ease-in-out;
+  cursor: pointer;
+}
+
+.imageWrapper img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.35s ease-in-out, transform 0.35s ease-in-out;
+  filter: grayscale(100%) blur(7px);
+  transform: scale(0.7);
+  opacity: 0.7;
+}
+
+/* --- React Slick Specific Classes for Effects --- */
+
+// Styles for the current active/center slide
+// React Slick applies `slick-center` to the active slide.
+:global(.slick-center) .imageWrapper {
+  z-index: 5;
+  transform: scale(1.35); /* Slightly larger scale for center */
+  box-shadow: 0 7px 13.5px rgba(0, 0, 0, 0.35);
+  transition: all 0.35s ease-in-out;
+}
+
+:global(.slick-center) .imageWrapper img {
+  filter: grayscale(0%) blur(0); /* Clear and in focus */
+  transform: scale(1);
+  opacity: 1;
+  transition: all 0.35s ease-in-out;
+}
+
+/* Overlay for title and description */
+.imageOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  box-sizing: border-box;
+  pointer-events: none;
+  transition: all 0.35s ease-in-out;
+}
+
+.imageTitle {
+  font-size: 1.35em;
+  margin-bottom: 7px;
+  opacity: 0;
+  transition: opacity 0.35s ease-in-out;
+  text-shadow: 1.35px 1.35px 3.5px rgba(0, 0, 0, 0.7);
+}
+
+.imageDescription {
+  font-size: 0.7em;
+  line-height: 1.35;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
+  text-shadow: 1.35px 1.35px 3.5px rgba(0, 0, 0, 0.7);
+  transition: all 0.35s ease-in-out;
+}
+
+/* Make title/description visible for the center image */
+:global(.slick-center) .imageTitle,
+:global(.slick-center) .imageDescription {
+  opacity: 1;
+  transition: all 0.35s ease-in-out;
+}
+
+/* Description "jump-out" effect on hover for the center image */
+.imageWrapper:hover .imageDescription {
+  opacity: 1;
+  transform: translateY(calc(-100% - 12px)); /* Moves it up */
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 7px 7px;
+  border-radius: 7px;
+  width: 88%;
+  margin: 0 auto;
+  transition: all 0.35s ease-in-out;
+}
+
+.imageWrapper:hover .imageTitle {
+  opacity: 0.35;
+  transform: translateY(calc(-100% - 13.5px)); /* Moves it up */
+  padding: 7px 12px;
+  border-radius: 7px;
+  width: 88%;
+  margin: 0 auto;
+  transition: all 0.35s ease-in-out;
+}
+
+/* Nav Buttons (using slick's default button classes and overriding) */
+:global(.slick-prev),
+:global(.slick-next) {
+  z-index: 10;
+  width: 35px;
+  height: 35px;
+  transition: all 0.35s ease-in-out;
+
+  /* Hide default content and use our own */
+  &:before {
+    font-family: "slick";
+    font-size: 20px;
+    line-height: 2;
+    opacity: 0.7;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: all 0.35s ease-in-out;
+  }
+}
+
+:global(.slick-prev) {
+  left: 12px;
+  transition: all 0.35s ease-in-out;
+
+  &:before {
+    content: "\2190"; /* Left arrow */
+    transition: all 0.35s ease-in-out;
+  }
+}
+
+:global(.slick-next) {
+  right: 12px;
+  transition: all 0.35s ease-in-out;
+
+  &:before {
+    content: "\2192"; /* Right arrow */
+    transition: all 0.35s ease-in-out;
+  }
+}
+
+// Our custom button styles for appearance
+.navButton {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 7px;
+  transition: background-color 0.35s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: all 0.35s ease-in-out;
+  }
+}
+
+// Hiding default slick arrows and using our custom ones
+:global(.slick-prev.slick-arrow) {
+  left: 12px; /* Adjust position */
+  transition: all 0.35s ease-in-out;
+}
+:global(.slick-next.slick-arrow) {
+  right: 12px; /* Adjust position */
+  transition: all 0.35s ease-in-out;
+}
+
+/* Dots (using slick's default dot classes) */
+:global(.slick-dots) {
+  position: absolute;
+  bottom: 3.5px;
+  width: 100%;
+  display: flex !important; /* Override slick's inline style */
+  justify-content: center;
+  list-style: none; /* Remove default list styling */
+  padding: 0;
+  margin: 0;
+  transition: all 0.35s ease-in-out;
+}
+
+:global(.slick-dots li) {
+  margin: 0 3.5px; /* Space between dots */
+  transition: all 0.35s ease-in-out;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 0.7px outset rgba(255, 255, 255, 0.7);
+  box-shadow: 0 3.5px 7px rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.35s ease;
+  display: block; /* Ensure it's a block for dimensions */
+
+  &:hover {
+    background-color: var(--primaryColor);
+    border-color: var(--whiteColor);
+    transform: scale(1.35);
+    transition: all 0.35s ease-in-out;
+  }
+
+  span {
+    /* Slick often wraps the dot content in a span or button */
+    display: none; /* Hide default dot numbers */
+    transition: all 0.35s ease-in-out;
+  }
+}
+
+:global(.slick-dots li.slick-active) .dot {
+  background-color: var(--primaryColor); /* Color for the active dot */
+  border-color: var(--whiteColor);
+  box-shadow: 0 0px 7px rgba(255, 255, 255, 0.7);
+  width: 20px;
+  border-radius: 35%;
+  transition: all 0.35s ease-in-out;
+}
+
+// Ensure proper height for the slider when images have fixed height
+:global(.slick-list) {
+  padding-top: 0 !important; /* Override slick's default padding */
+  padding-bottom: 0 !important;
+  transition: all 0.35s ease-in-out;
+}
+
+:global(.slick-track) {
+  display: flex;
+  align-items: center; /* Vertically center slides if they have different heights */
+  transition: all 0.35s ease-in-out;
+}
