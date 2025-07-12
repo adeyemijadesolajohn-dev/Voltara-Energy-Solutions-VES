@@ -67,7 +67,7 @@ const Sidebar = () => {
     }
   }, [file]);
 
-  // Updated to dynamically create links with the userId
+  // dynamically create links with the userId
   const renderNavLinks = useCallback(
     (links) =>
       links.map(({ id, link, icon: Icon, title }) => {
