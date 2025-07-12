@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Register.scss";
 import "../../App.scss";
 import { Icons, Public } from "../../data/Assets";
+import DevToggle from "../../components/dev/DevToggle";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState({
@@ -20,10 +21,9 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [apiMessage, setApiMessage] = useState({ type: "", text: "" }); // { type: 'success' | 'error', text: 'message' }
+  const [apiMessage, setApiMessage] = useState({ type: "", text: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Password guide state
   const [passwordGuide, setPasswordGuide] = useState({
     minLength: false,
     hasUppercase: false,
@@ -43,39 +43,31 @@ const Register = () => {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-    // Clear specific error and API messages when input changes
     setErrors((prev) => ({ ...prev, [name]: "" }));
     setApiMessage({ type: "", text: "" });
 
-    // Update password guide on password input change
     if (name === "password") {
       setPasswordGuide({
         minLength: value.length >= 8,
         hasUppercase: /[A-Z]/.test(value),
         hasLowercase: /[a-z]/.test(value),
         hasNumber: /[0-9]/.test(value),
-        hasSymbol: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(value), // Common symbols
+        hasSymbol: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(value),
       });
     }
   };
 
-  /**
-   * Client-side validation rules
-   */
   const validate = () => {
     const newErrors = {};
 
-    // Validate first name and last name
     if (!formData.firstName.trim())
       newErrors.firstName = "First name is required";
     if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
 
-    // Validate email
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Invalid email format";
     }
 
-    // Password complexity validation
     let passwordErrors = [];
     if (formData.password.length < 8) {
       passwordErrors.push("At least 8 characters");
@@ -108,18 +100,15 @@ const Register = () => {
     return newErrors;
   };
 
-  // Helper to determine if an input should have a green border
   const isValidInput = (id) => {
-    // Check if there's no error for the specific ID and the field is not empty
     const hasValue = formData[id] && formData[id].toString().trim() !== "";
 
-    // Special handling for password: it's valid only if all guide requirements are met and no other errors
     if (id === "password") {
       const allPasswordRequirementsMet =
         Object.values(passwordGuide).every(Boolean);
       return hasValue && allPasswordRequirementsMet && !errors.password;
     }
-    // Special handling for confirmPassword: it's valid if matches password and not empty
+
     if (id === "confirmPassword") {
       return (
         hasValue &&
@@ -127,7 +116,7 @@ const Register = () => {
         !errors.confirmPassword
       );
     }
-    // For other fields
+
     return hasValue && !errors[id];
   };
 
@@ -135,7 +124,7 @@ const Register = () => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
-    setApiMessage({ type: "", text: "" }); // Clear previous API message
+    setApiMessage({ type: "", text: "" });
 
     if (Object.keys(validationErrors).length > 0) {
       setApiMessage({
@@ -148,7 +137,8 @@ const Register = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("http://45.55.133.211:5144/api/users/register", {
+      // Step 1: Register the new user
+      const registerRes = await fetch("/api/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -158,68 +148,85 @@ const Register = () => {
           lastname: formData.lastName,
           email: formData.email,
           password: formData.password,
-          created_at: new Date().toISOString(), // Generate current ISO 8601 timestamp
         }),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!registerRes.ok) {
+        const registerData = await registerRes.json();
         let errorText =
-          data.message || "Registration failed. Please try again.";
-
-        // Check for specific "email already in use" message
-        if (
-          data.message &&
-          data.message.toLowerCase().includes("email already in use")
-        ) {
-          errorText =
-            "This email is already registered. Please try logging in or use a different email.";
-        } else if (
-          data.errors &&
-          Array.isArray(data.errors) &&
-          data.errors.length > 0
-        ) {
-          // Attempt to get more specific error from an errors array if available
-          const specificError = data.errors.find(
-            (err) => err.field === "email" && err.code === "duplicate_email"
-          ); // Example
-          if (specificError) {
-            errorText = specificError.description;
-          } else {
-            errorText =
-              data.errors
-                .map((err) => err.description || err.message)
-                .join(", ") || errorText;
-          }
-        }
+          registerData.message || "Registration failed. Please try again.";
         setApiMessage({ type: "error", text: errorText });
-        return; // Stop execution if API call failed
+        return;
       }
 
-      // Success
-      setApiMessage({
-        type: "success",
-        text:
-          data.message ||
-          "Registration successful! Redirecting to dashboard...",
+      // Step 2: Log in the newly created user to get their session
+      const loginRes = await fetch("/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
       });
 
-      // NEW: Store user ID upon successful registration
-      if (data.id) {
-        // Assuming your API returns the new user's ID on success
-        localStorage.setItem("userId", data.id);
-      } else {
-        console.warn("Registration API did not return user ID.");
-      }
-      // END NEW
+      const loginData = await loginRes.json();
 
-      // Redirect after a short delay to allow success message to be seen
-      setTimeout(() => {
-        navigate("/SelectDashboard");
-      }, 3500); // Redirect after 3.5 seconds
+      if (
+        !loginRes.ok ||
+        !loginData.response ||
+        !loginData.data ||
+        !loginData.data.email
+      ) {
+        setApiMessage({
+          type: "error",
+          text:
+            loginData.message ||
+            "Login after registration failed. Please try logging in manually.",
+        });
+        return;
+      }
+
+      const userEmail = loginData.data.email;
+      localStorage.setItem("userEmail", userEmail);
+
+      // New Step 3: Fetch the user's ID immediately after login
+      setTimeout(async () => {
+        try {
+          const allUsersRes = await fetch("/api/users/all-users");
+          const allUsers = await allUsersRes.json();
+          const currentUser = allUsers.find((user) => user.email === userEmail);
+
+          if (currentUser) {
+            localStorage.setItem("userId", currentUser.id);
+            setApiMessage({
+              type: "success",
+              text: "Registration successful! Redirecting...",
+            });
+            // Navigate to the new dynamic path with the user's ID
+            navigate(`/SelectDashboard/${currentUser.id}`);
+          } else {
+            console.error(
+              "Could not find user ID after successful registration."
+            );
+            setApiMessage({
+              type: "error",
+              text: "Registration successful, but login failed. Please try logging in.",
+            });
+          }
+        } catch (err) {
+          console.error("Error fetching user ID after registration:", err);
+          setApiMessage({
+            type: "error",
+            text: "Network error or server unavailable. Please try again.",
+          });
+        } finally {
+          setIsSubmitting(false);
+        }
+      }, 1000); // 1-second delay for backend to sync
     } catch (err) {
-      console.error("Registration API error:", err);
+      console.error("API error:", err);
       setApiMessage({
         type: "error",
         text: "Network error or server unavailable. Please try again later.",
@@ -229,42 +236,34 @@ const Register = () => {
     }
   };
 
-  // Condition to render the password guide container
   const shouldRenderPasswordGuideContainer =
     formData.password && !Object.values(passwordGuide).every(Boolean);
 
   return (
     <div className="flex registerPage">
       <div className="flex container">
-        {/* Background Section */}
         <div className="loginBGDiv">
           <img src={Public.BG} alt="Login Background" />
-
           <div className="loginBGText">
             <h2 className="loginBGHeading">Connecting you to the future</h2>
-
             <p>Create your Connection</p>
           </div>
         </div>
 
-        {/* Form Section */}
         <div className="flex formDiv">
+          <DevToggle />
           <div className="headerDiv">
             <Link to="/" className="logo">
               <img src={Public.Logo} alt="Voltara logo" />
-
               <h4>Voltara</h4>
-
               <p>Energy Solutions</p>
             </Link>
-
             <h3>Join Us</h3>
           </div>
 
           <form className="grid form" onSubmit={handleSubmit} noValidate>
             <h2>Sign Up</h2>
 
-            {/* API Message Display */}
             {apiMessage.text && (
               <p
                 className={`api-message ${
@@ -282,7 +281,6 @@ const Register = () => {
               </p>
             )}
 
-            {/* Dynamic Inputs (FirstName, LastName, Email, Password, ConfirmPassword) */}
             {[
               {
                 icon: <Icons.CompanyUser className="icon" />,
@@ -335,7 +333,6 @@ const Register = () => {
                     }`}
                   >
                     {icon}
-
                     <input
                       type={type}
                       id={id}
@@ -347,7 +344,6 @@ const Register = () => {
                       aria-invalid={!!errors[id]}
                       maxLength={maxLength}
                     />
-
                     <label htmlFor={id}>{label}</label>
 
                     {toggle &&
@@ -368,7 +364,6 @@ const Register = () => {
 
                   {errors[id] && <span className="errorMsg">{errors[id]}</span>}
 
-                  {/* Password Guide for the password field only */}
                   {id === "password" &&
                     formData.password &&
                     shouldRenderPasswordGuideContainer && (
@@ -409,7 +404,6 @@ const Register = () => {
               )
             )}
 
-            {/* Terms & Conditions */}
             <div className="flex termsConditions">
               <label>
                 <input
@@ -435,17 +429,12 @@ const Register = () => {
             {errors.termsAccepted && (
               <span
                 className="errorMsg"
-                style={{
-                  fontSize: "0.7em",
-                  color: "#dc3545",
-                  marginTop: "-0.7rem",
-                }}
+                style={{ fontSize: "0.7em", color: "#dc3545" }}
               >
                 {errors.termsAccepted}
               </span>
             )}
 
-            {/* Submit Button */}
             <button type="submit" className="btn" disabled={isSubmitting}>
               {isSubmitting ? "Signing Up..." : "Sign Up"}
             </button>

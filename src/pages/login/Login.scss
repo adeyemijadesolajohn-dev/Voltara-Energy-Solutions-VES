@@ -265,8 +265,9 @@ $transition: 0.35s ease-in-out;
           font-size: 12px;
           margin: -8px 5.5px 2px;
 
-          label {
+          .rememberMe {
             font-weight: 555;
+            display: flex;
 
             input {
               margin-right: 5px;

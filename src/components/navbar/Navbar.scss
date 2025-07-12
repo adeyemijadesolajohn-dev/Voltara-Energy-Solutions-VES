@@ -1,0 +1,655 @@
+.navbar {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--primaryColor) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  border-block: 2px solid var(--secondaryColor);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 7px;
+  padding: 7px;
+  transition: all 0.35s ease-in-out;
+  cursor: pointer;
+
+  .navbarOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+    transition: opacity 1.35s ease-in;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .sidebarToggler {
+    flex-basis: 2%;
+    position: fixed;
+    top: 77px;
+    left: 222px;
+    z-index: 1000;
+    transition: transform 0.35s ease-in-out;
+
+    &.hide {
+      transform: translateY(-200%);
+      pointer-events: none;
+      opacity: 0;
+      transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
+    }
+
+    &.show {
+      transform: translateY(-100%);
+      pointer-events: auto;
+      opacity: 1;
+      transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
+    }
+
+    .sidebarTogglerInner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      cursor: pointer;
+      color: var(--primaryColor);
+      box-sizing: border-box;
+      background-color: rgba(255, 255, 255, 0.35);
+      border-radius: 13.5px;
+      box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px,
+        rgba(0, 0, 0, 0.7) 0 8px 12px -5px;
+      border: 2px outset rgba(255, 255, 255, 0.7);
+      width: 35px;
+      height: 35px;
+      padding: 25px;
+      transition: all 0.35s ease-in-out;
+
+      .sidebarTogglerButton {
+        position: relative;
+        border: none;
+        outline: none;
+        height: 100%;
+        width: 100%;
+        background-color: transparent;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .sidebarTogglerIcon {
+        position: absolute;
+        font-size: 23.5px;
+        font-weight: 555;
+        transition: all 0.35s ease-in-out;
+        cursor: pointer;
+
+        .sidebarIcon {
+          display: block;
+          text-shadow: 0 0 3.5px rgba(0, 0, 0, 0.7);
+          transition: all 0.35s ease-in-out;
+        }
+      }
+
+      &:hover {
+        color: var(--whiteColor);
+        text-shadow: 0 0 3.5px rgba(255, 255, 255, 0.7);
+        transform: scale(1.1);
+        transition: all 0.35s ease-in-out;
+      }
+    }
+  }
+
+  .navbarMobileToggle {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 7px;
+    padding: 12px;
+    border: 2px inset rgba(255, 255, 255, 0.55);
+    border-radius: 12px;
+    font-size: 23.5px;
+    font-weight: 555;
+    color: var(--whiteColor);
+    text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.35);
+    box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px,
+      rgba(0, 0, 0, 0.7) 0 8px 12px -5px;
+    transition: transform 0.35s ease-in-out;
+
+    &.hide {
+      transform: translateY(-200%);
+      pointer-events: none;
+      opacity: 0;
+      transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
+    }
+
+    &.show {
+      transform: translateY(0%);
+      pointer-events: auto;
+      opacity: 1;
+      transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
+    }
+
+    &:hover {
+      border: 2px inset whitesmoke;
+      background-color: rgba(255, 255, 255, 0.55);
+      box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px,
+        rgba(0, 0, 0, 0.7) 0 8px 12px -5px;
+      text-shadow: 0 0 2px rgba(255, 255, 255, 1);
+      color: var(--primaryColor);
+      transform: scale(1.1);
+      transition: all 0.35s ease-in-out;
+    }
+
+    .navbarMobileIcon {
+      display: block;
+      transition: all 0.35s ease-in-out;
+    }
+  }
+
+  .navbarContainer {
+    flex-basis: 98%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 23.5px;
+    padding-inline: 20px;
+    transition: all 0.35s ease-in-out;
+    cursor: pointer;
+
+    .navbarBrand {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.35s ease-in-out;
+
+      .navbarTitle {
+        font-weight: 1000;
+        color: var(--whiteColor);
+        text-shadow: 0 0 3.5px rgba(255, 255, 255, 0.7);
+        transition: all 0.35s ease-in-out;
+      }
+
+      .navbarSubtitle {
+        font-size: 13.5px;
+        font-weight: 555;
+        color: var(--secondaryColor);
+        text-shadow: 0 0 3.5px rgba(0, 0, 0, 0.7);
+        transition: all 0.35s ease-in-out;
+      }
+    }
+
+    .navbarMenu {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: center;
+      transition: all 0.35s ease-in-out;
+
+      .navbarList {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 13.5px;
+        transition: all 0.35s ease-in-out;
+
+        .navbarItem {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: all 0.35s ease-in-out;
+          position: relative;
+
+          .navbarLinkButton {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 7px;
+            padding: 20px;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 555;
+            background-color: transparent;
+            color: var(--whiteColor);
+            text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+            transition: all 0.35s ease-in-out;
+
+            &:hover {
+              border: 2px inset whitesmoke;
+              background-color: rgba(255, 255, 255, 0.35);
+              box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px,
+                rgba(0, 0, 0, 0.7) 0 8px 12px -5px;
+              text-shadow: 0 0 2px rgba(255, 255, 255, 1);
+              color: var(--whiteColor);
+              transform: scale(1.1);
+              transition: all 0.35s ease-in-out;
+
+              .navbarChevronContainer {
+                animation: rotate 0.35s linear;
+                transform: rotate(180deg);
+                transform-origin: center center;
+                transition: all 0.35s ease-in-out;
+
+                @keyframes rotate {
+                  from {
+                    transform: rotate(0deg);
+                  }
+
+                  to {
+                    transform: rotate(180deg);
+                  }
+                }
+
+                .navbarChevron {
+                  color: var(--whiteColor);
+                  text-shadow: 0 0 35px rgba(255, 255, 255, 1);
+                  transition: all 0.35s ease-in-out;
+                }
+              }
+            }
+
+            &.isActive {
+              border: 2px inset whitesmoke;
+              background-color: rgba(255, 255, 255, 0.35);
+              box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px,
+                rgba(0, 0, 0, 0.7) 0 8px 12px -5px;
+              text-shadow: 0 0 2px rgba(255, 255, 255, 1);
+              transform: scale(1);
+              transition: all 0.35s ease-in-out;
+            }
+
+            .navbarChevronContainer {
+              display: block;
+              animation: rotateBack 0.35s linear;
+              transform: rotate(0deg);
+              transform-origin: center center;
+              transition: all 0.35s ease-in-out;
+
+              @keyframes rotateBack {
+                from {
+                  transform: rotate(180deg);
+                }
+
+                to {
+                  transform: rotate(360deg);
+                }
+              }
+
+              .navbarChevron {
+                font-size: 20px;
+                font-weight: 1000;
+                color: var(--whiteColor);
+                text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
+                animation-name: bounce;
+                animation-duration: 0.35s;
+                animation-direction: alternate;
+                animation-timing-function: cubic-bezier(0, 0.05, 1, 0.5);
+                animation-iteration-count: infinite;
+                transition: all 0.35s ease-in-out;
+
+                @keyframes bounce {
+                  from {
+                    transform: translate3d(0, 0, 0);
+                    transform: translate3d(0, 0, 0);
+                  }
+
+                  to {
+                    transform: translate3d(0, 8px, 0);
+                    transform: translate3d(0, 8px, 0);
+                  }
+                }
+              }
+            }
+          }
+
+          .navbarDropdown {
+            position: absolute;
+            top: calc(100% + 7px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px outset rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            box-shadow: inset rgba(255, 255, 255, 0.35) 0 0px 35px 5px,
+              rgba(0, 0, 0, 0.35) 0 3.5px 12px;
+            backdrop-filter: blur(3.5px);
+            min-width: 150px;
+            z-index: 1000;
+            padding: 7px 0;
+            transition: all 0.35s ease-in-out;
+
+            .navbarDropdownItem {
+              padding: 12px 20px;
+              font-size: 13.5px;
+              font-weight: 555;
+              color: var(--whiteColor);
+              cursor: pointer;
+              transition: all 0.35s ease-in-out;
+
+              &:hover {
+                background-color: var(--secondaryColor);
+                color: var(--primaryColor);
+                text-shadow: 0 0 7px rgba(255, 255, 255, 1);
+                transition: all 0.35s ease-in-out;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .navbar {
+    .navbarContainer {
+      padding-right: 17px;
+      gap: 12px;
+      transition: all 0.35s ease-in-out;
+
+      .navbarBrand {
+        .navbarTitle {
+          font-size: 17px;
+          transition: all 0.35s ease-in-out;
+        }
+        .navbarSubtitle {
+          font-size: 12px;
+          transition: all 0.35s ease-in-out;
+        }
+      }
+      .navbarMenu {
+        .navbarList {
+          .navbarItem {
+            .navbarLink {
+              font-size: 10px;
+              transition: all 0.35s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1240px) {
+  .navbar {
+    .navbarContainer {
+      padding-inline: 20px 0px;
+      transition: all 0.35s ease-in-out;
+
+      .navbarBrand {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        text-align: left;
+        width: 50%;
+        transition: all 0.35s ease-in-out;
+
+        .navbarTitle {
+          font-size: 20px;
+          transition: all 0.35s ease-in-out;
+        }
+
+        .navbarSubtitle {
+          font-size: 12px;
+          transition: all 0.35s ease-in-out;
+        }
+      }
+
+      .navbarMenu {
+        .navbarList {
+          .navbarItem {
+            .navbarLink {
+              font-size: 10px;
+              transition: all 0.35s ease-in-out;
+
+              &:hover {
+                font-weight: 1000;
+                transition: all 0.35s ease-in-out;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .navbar {
+    padding-block: 2px;
+    transition: all 0.35s ease-in-out;
+
+    .sidebarToggler {
+      left: 13.5px;
+      top: 210px;
+      transition: all 0.35s ease-in-out;
+    }
+
+    .navbarContainer {
+      .navbarMenu {
+        .navbarList {
+          .navbarItem {
+            .navbarLink {
+              padding: 20px, 7px;
+              gap: 3.5px;
+              transition: all 0.35s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .navbar {
+    padding: 7px 12px;
+    transition: all 0.35s ease-in-out;
+
+    .navbarContainer {
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.35s ease-in-out;
+
+      .navbarBrand {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: fit-content;
+        gap: 7px;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .navbarMenu {
+        width: 90%;
+        justify-content: space-between;
+        transition: all 0.35s ease-in-out;
+
+        .navbarList {
+          .navbarItem {
+            .navbarLink {
+              padding: 7px, 3.5px;
+              gap: 3.5px;
+              font-size: 10px;
+              transition: all 0.35s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .navbar {
+    position: fixed;
+    z-index: 999999999999999999999;
+    justify-content: flex-end;
+    align-items: flex-end;
+    right: 0px;
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 100px;
+    margin-top: 0px;
+    left: 0px;
+    border-block: none;
+    transition: all 0.35s ease-in-out;
+    height: 0px;
+    background-color: unset;
+    background: unset;
+
+    .navbarOverlay {
+      opacity: 1;
+      transition: opacity 1.35s ease-in;
+    }
+
+    .navbarMobileToggle {
+      position: absolute;
+      top: 55px;
+      right: 12px;
+      z-index: 1000;
+      display: flex;
+      color: var(--primaryColor);
+      transition: all 0.35s ease-in-out;
+
+      &:hover {
+        color: var(--whiteColor);
+        text-shadow: 0 0 2px rgba(255, 255, 255, 1);
+        transition: all 0.35s ease-in-out;
+      }
+    }
+
+    .navbarContainer {
+      flex-basis: 44%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 7px;
+      padding: 13.5px;
+      background-color: rgba(255, 255, 255, 0.2);
+      box-shadow: rgba(0, 0, 0, 0.7) 0 8px 12px -5px;
+      border-radius: 13.5px;
+      border: 2px outset rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(3.5px);
+      transition: all 0.35s ease-in-out;
+      margin-right: -100%;
+      position: fixed;
+      top: 20%;
+      pointer-events: none;
+      cursor: none;
+      opacity: 0;
+
+      &.open {
+        margin-right: 0%;
+        pointer-events: auto;
+        cursor: pointer;
+        opacity: 1;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .navbarBrand {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        text-align: left;
+        width: fit-content;
+        padding-bottom: 7px;
+        border-bottom: 2px solid rgba(245, 245, 245, 0.2);
+        gap: 0px;
+        transition: all 0.35s ease-in-out;
+
+        .navbarTitle {
+          width: 70%;
+          font-size: 20px;
+          color: var(--whiteColor);
+          transition: all 0.35s ease-in-out;
+        }
+
+        .navbarSubtitle {
+          font-size: 12px;
+          color: var(--whiteColor);
+          transition: all 0.35s ease-in-out;
+        }
+      }
+
+      .navbarMenu {
+        width: 100%;
+        justify-content: flex-end;
+        transition: all 0.35s ease-in-out;
+
+        .navbarList {
+          width: 100%;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-end;
+          gap: 7px;
+          transition: all 0.35s ease-in-out;
+
+          .navbarItem {
+            width: 100%;
+            justify-content: flex-end;
+            border-right: 2px solid rgba(245, 245, 245, 0.2);
+            padding-right: 7px;
+            transition: all 0.35s ease-in-out;
+
+            .navbarDropdown {
+              left: auto;
+              right: 107%;
+              top: 50%;
+              transform: translateY(-50%) translateX(-7px);
+              transition: all 0.35s ease-in-out;
+            }
+
+            .navbarLink {
+              text-align: right;
+              width: 100%;
+              justify-content: flex-end;
+              padding: 12px 13.5px;
+              gap: 3.5px;
+              font-size: 12px;
+              text-shadow: 0 0 2px var(--primaryColor);
+              transition: all 0.35s ease-in-out;
+
+              &:hover {
+                font-weight: 1000;
+                border: 2px inset whitesmoke;
+                transition: all 0.35s ease-in-out;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 666px) {
+  .navbar {
+    .navbarMobileToggle {
+      top: 7px;
+      right: 12px;
+      transition: all 0.35s ease-in-out;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .navbar {
+    .navbarContainer {
+      flex-basis: 55%;
+      transition: all 0.35s ease-in-out;
+    }
+  }
+}

@@ -1,0 +1,737 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(7px);
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999999999999999999999999999999999;
+  transition: all 0.35s ease-in-out;
+
+  .modalContent {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px outset rgba(255, 255, 255, 0.7);
+    border-radius: 35px;
+    padding: 2rem;
+    width: 720px;
+    color: var(--whiteColor);
+    position: relative;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.7),
+      inset 0 0 70px 20px rgba(255, 255, 255, 0.35);
+    animation: zoomIn 0.35s ease-in-out forwards;
+    transition: all 0.35s ease-in-out;
+
+    .formHeadingDiv {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-block: 20px;
+      margin-bottom: 35px;
+      transition: all 0.35s ease-in-out;
+
+      .formHeading {
+        font-weight: bolder;
+        transition: all 0.35s ease-in-out;
+        color: var(--whiteColor);
+        text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
+      }
+
+      .closeIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background-color: transparent;
+        border: 2px solid transparent;
+        border-radius: 50px;
+        padding: 3.5px;
+        font-size: 35px;
+        font-weight: 1000;
+        color: var(--whiteColor);
+        cursor: pointer;
+        transition: all 0.35s ease-in-out;
+
+        .iconCA {
+          display: block;
+          transition: all 0.35s ease-in-out;
+        }
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+          border: 2px outset rgba(255, 255, 255, 0.7);
+          box-shadow: inset 0 3.5px 7px rgba(0, 0, 0, 0.2),
+            0 3.5px 7px rgba(0, 0, 0, 0.7);
+          transition: all 0.35s ease-in-out;
+
+          .iconCA {
+            color: red;
+            animation-name: spin;
+            animation-duration: 5000ms;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            transform-origin: center center;
+            transition: all 0.35s ease-in-out;
+
+            @keyframes spin {
+              from {
+                transform: rotate(0deg);
+              }
+              to {
+                transform: rotate(360deg);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .progressForm {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      counter-reset: step;
+      transition: all 0.35s ease-in-out;
+
+      &::before,
+      .progress {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        transform: translateY(-50%);
+        height: 3.5px;
+        background-color: var(--secondaryColor);
+        z-index: -1;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .progress {
+        background-color: var(--whiteColor);
+        box-shadow: 0px 0px 3.5px 2px rgba(255, 255, 255, 0.7);
+        z-index: 0;
+        width: 0%;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .progressSteps {
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        border: 3.5px solid var(--secondaryColor);
+        background: var(--whiteColor);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-weight: 555;
+        color: var(--secondaryColor);
+        position: relative;
+        transition: all 0.35s ease-in-out;
+        z-index: 1;
+
+        &::before {
+          content: counter(step);
+          counter-increment: step;
+          font-size: 20px;
+          transition: all 0.35s ease-in-out;
+
+          &:first-child {
+            transform-origin: 0 0;
+            transition: all 0.35s ease-in-out;
+          }
+
+          &:nth-child {
+            transform-origin: 50% 0;
+            transition: all 0.35s ease-in-out;
+          }
+
+          &:last-child {
+            transform-origin: 100% 0;
+            transition: all 0.35s ease-in-out;
+
+            @keyframes animate {
+              from {
+                transform: scale(0.5, 1);
+                opacity: 0;
+              }
+
+              to {
+                transform: scale(1, 1);
+                opacity: 1;
+              }
+            }
+          }
+        }
+
+        &.progressStepActive {
+          width: 100px;
+          height: 70px;
+          background: var(--primaryColor);
+          color: var(--whiteColor);
+          border-color: var(--whiteColor);
+          box-shadow: 0px 0px 3.5px 2px rgba(255, 255, 255, 0.7);
+          transition: all 0.7s ease-in-out;
+
+          @keyframes animate {
+            from {
+              transform: scale(0.5, 1);
+              opacity: 0;
+            }
+
+            to {
+              transform: scale(1, 1);
+              opacity: 1;
+            }
+          }
+
+          &:first-child {
+            transform-origin: 0 0;
+            transition: all 0.35s ease-in-out;
+          }
+
+          &:nth-child {
+            transform-origin: 50% 0;
+            transition: all 0.35s ease-in-out;
+          }
+
+          &:last-child {
+            transform-origin: 100% 0;
+            transition: all 0.35s ease-in-out;
+          }
+
+          &::before {
+            content: attr(data-title);
+            position: absolute;
+            font-size: 12px;
+            color: var(--whiteColor);
+            animation: animate 0.7s ease-out;
+            transition: all 0.35s ease-in-out;
+
+            &:first-child {
+              transform-origin: 0 0;
+              transition: all 0.35s ease-in-out;
+            }
+
+            &:nth-child {
+              transform-origin: 50% 0;
+              transition: all 0.35s ease-in-out;
+            }
+
+            &:last-child {
+              transform-origin: 100% 0;
+              transition: all 0.35s ease-in-out;
+            }
+
+            @keyframes animate {
+              from {
+                transform: scale(0.5, 1);
+
+                opacity: 0;
+              }
+
+              to {
+                transform: scale(1, 1);
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .formBody {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.35s ease-in-out;
+
+      .formStep {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 13.5px;
+        transition: all 0.35s ease-in-out;
+
+        .createInput:has(select.isDisabled) .formLabel {
+          opacity: 0.35;
+          transition: all 0.35s ease-in-out;
+        }
+
+        .createInput .formLabel {
+          transition: opacity 0.35s ease-in-out;
+        }
+
+        .createInput:has(.formInput.isDisabled) .formLabel {
+          opacity: 0.35;
+          transition: all 0.35s ease-in-out;
+        }
+
+        .createInput {
+          width: 70%;
+          position: relative;
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: 13.5px;
+          transition: all 0.7s ease-in-out;
+
+          .createIcon {
+            display: block;
+            position: absolute;
+            font-size: 20px;
+            color: var(--whiteColor);
+            transition: all 0.7s ease-in-out;
+            left: 13.5px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+
+          .formLabel {
+            position: absolute;
+            top: 50%;
+            left: 40px;
+            transform: translateY(-50%);
+            color: var(--secondaryColor);
+            font-size: 13.5px;
+            font-weight: 555;
+            transition: all 0.7s ease-in-out;
+            pointer-events: none;
+            opacity: 1;
+          }
+
+          input[type="text"]:not(:placeholder-shown) ~ .formLabel,
+          input[type="text"]:focus ~ .formLabel,
+          input[type="email"]:not(:placeholder-shown) ~ .formLabel,
+          input[type="email"]:focus ~ .formLabel,
+          input[type="number"]:not(:placeholder-shown) ~ .formLabel,
+          input[type="number"]:focus ~ .formLabel {
+            top: -0px;
+            left: 20px;
+            color: var(--whiteColor);
+            font-size: 12px;
+            background-color: var(--primaryColor);
+            border: 2px solid var(--whiteColor);
+            border-radius: 12px;
+            padding: 0 7px;
+            opacity: 1;
+            transition: all 0.07s ease-in-out;
+          }
+
+          input[type="text"]:not(:placeholder-shown):valid,
+          input[type="email"]:not(:placeholder-shown):valid,
+          input[type="number"]:not(:placeholder-shown):valid {
+            box-shadow: 0 0 5px 1px yellowgreen;
+            transition: all 0.07s ease-in-out;
+
+            ~ .formLabel {
+              color: yellowgreen;
+              box-shadow: 0 0 5px 1px yellowgreen;
+              transition: all 0.07s ease-in-out;
+            }
+          }
+
+          input[type="text"]:not(:placeholder-shown):invalid,
+          input[type="email"]:not(:placeholder-shown):invalid,
+          input[type="number"]:not(:placeholder-shown):invalid {
+            box-shadow: 0 0 5px 1px red;
+            transition: all 0.07s ease-in-out;
+
+            ~ .formLabel {
+              color: red;
+              box-shadow: 0 0 5px 1px red;
+              transition: all 0.07s ease-in-out;
+            }
+          }
+
+          select.formInput {
+            appearance: none;
+            background-color: transparent;
+            border: 2px solid var(--secondaryColor);
+            border-radius: 20px;
+            padding: 13.5px 40px;
+            font-size: 13.5px;
+            font-weight: 555;
+            color: var(--whiteColor);
+            background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 13.5px center;
+            background-size: 20px;
+            cursor: pointer;
+            transition: all 0.035s ease-in-out;
+
+            &:hover {
+              border-color: var(--whiteColor);
+              transition: all 0.035s ease-in-out;
+            }
+          }
+
+          select.formInput.hasValue {
+            box-shadow: 0 0 5px 1px yellowgreen;
+            transition: all 0.07s ease-in-out;
+
+            ~ .formLabel {
+              top: -0px;
+              left: 20px;
+              font-size: 12px;
+              background-color: var(--primaryColor);
+              border: 2px solid var(--whiteColor);
+              border-radius: 12px;
+              padding: 0 7px;
+              opacity: 1;
+              transition: all 0.07s ease-in-out;
+              color: yellowgreen;
+              box-shadow: 0 0 5px 1px yellowgreen;
+            }
+          }
+
+          .formInput {
+            font-weight: 555;
+            font-size: 13.5px;
+            padding: 13.5px 40px;
+            color: var(--whiteColor);
+            border: 2px solid var(--secondaryColor);
+            border-radius: 20px;
+            transition: all 0.7s ease-in-out;
+            background-color: transparent;
+            outline: none;
+            width: 100%;
+            cursor: pointer;
+
+            &.isDisabled {
+              opacity: 0.35;
+              pointer-events: none;
+              filter: grayscale(30%);
+              cursor: not-allowed;
+              transition: all 0.35s ease-in-out;
+
+              ~ .formLabel,
+              ~ .createIcon {
+                opacity: 0.35;
+                pointer-events: none;
+                filter: grayscale(30%);
+                cursor: not-allowed;
+                transition: all 0.35s ease-in-out;
+              }
+            }
+
+            &.isEnabled {
+              opacity: 1;
+              pointer-events: auto;
+              filter: none;
+              cursor: pointer;
+              transition: all 0.35s ease-in-out;
+
+              ~ .formLabel,
+              ~ .createIcon {
+                opacity: 1;
+                pointer-events: auto;
+                filter: none;
+                cursor: pointer;
+                transition: all 0.35s ease-in-out;
+              }
+            }
+
+            &::placeholder {
+              opacity: 0;
+              transition: all 0.7s ease-in-out;
+              font-size: 13.5px;
+            }
+
+            &:hover {
+              border: 2px solid var(--whiteColor);
+              color: var(--whiteColor);
+              transition: all 0.7s ease-in-out;
+
+              ~ .formLabel,
+              ~ .createIcon {
+                color: var(--whiteColor);
+                transition: all 0.7s ease-in-out;
+              }
+
+              &::placeholder {
+                color: var(--whiteColor);
+                transition: all 0.7s ease-in-out;
+              }
+            }
+
+            &:focus {
+              border: 2px solid var(--whiteColor);
+              color: var(--whiteColor);
+              transition: all 0.7s ease-in-out;
+
+              ~ .formLabel {
+                top: -0px;
+                left: 20px;
+                color: var(--whiteColor);
+                font-size: 12px;
+                transition: all 0.07s ease-in-out;
+                background-color: var(--primaryColor);
+                border: 2px solid var(--whiteColor);
+                border-radius: 12px;
+                padding: 0 7px;
+                opacity: 1;
+              }
+
+              ~ .createIcon {
+                color: var(--whiteColor);
+                transition: all 0.7s ease-in-out;
+              }
+            }
+          }
+        }
+
+        .createCheckBox {
+          width: 70%;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          margin-bottom: 13.5px;
+          padding: 13.5px 40px;
+          border: 2px solid var(--secondaryColor);
+          border-radius: 20px;
+          transition: all 0.35s ease-in-out;
+          background-color: transparent;
+          cursor: pointer;
+
+          &:has(input:checked) {
+            border: 2px solid var(--whiteColor);
+            background-color: var(--primaryColor);
+            box-shadow: 0 0 5px 1px yellowgreen;
+            transition: all 0.35s ease-in-out;
+
+            .createCheckBoxInput {
+              .checkIcon {
+                color: var(--whiteColor);
+                transition: all 0.35s ease-in-out;
+              }
+
+              .createCheckBoxText {
+                color: var(--whiteColor);
+                transition: all 0.35s ease-in-out;
+              }
+            }
+          }
+
+          &:hover {
+            border: 2px solid var(--whiteColor);
+            color: var(--whiteColor);
+            transition: all 0.35s ease-in-out;
+
+            .createCheckBoxInput {
+              .checkIcon {
+                color: var(--whiteColor);
+                transition: all 0.35s ease-in-out;
+              }
+
+              .createCheckBoxText {
+                color: var(--whiteColor);
+                transition: all 0.35s ease-in-out;
+              }
+            }
+          }
+
+          .createCheckBoxInput {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 13.5px;
+            border-radius: 20px;
+            transition: all 0.35s ease-in-out;
+
+            .checkIcon {
+              display: block;
+              position: absolute;
+              font-size: 20px;
+              color: var(--whiteColor);
+              transition: all 0.7s ease-in-out;
+              left: 13.5px;
+              top: 50%;
+              transform: translateY(-50%);
+            }
+
+            .createCheckBoxText {
+              color: var(--secondaryColor);
+              font-size: 13.5px;
+              font-weight: 555;
+              transition: all 0.7s ease-in-out;
+              pointer-events: none;
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      .formError {
+        color: red;
+        font-weight: bold;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .progressBtns {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.35s ease-in-out;
+
+        .progressBtn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 13.5px;
+          padding: 1rem 3.5rem;
+          border: 2px outset rgba(255, 255, 255, 0.7);
+          color: var(--whiteColor);
+          background-color: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 3.5px 7px rgba(0, 0, 0, 0.35);
+          border-radius: 20px;
+          transition: all 0.35s ease-in-out;
+          cursor: pointer;
+
+          .btnIcon {
+            display: block;
+            font-size: 23.5px;
+            transition: all 0.35s ease-in-out;
+          }
+
+          &:hover {
+            transform: scale(1.1);
+            border: 2px outset var(--whiteColor);
+            background-color: var(--primaryColor);
+            box-shadow: 0 3.5px 7px rgba(0, 0, 0, 0.7);
+            color: var(--whiteColor);
+            transition: all 0.35s ease-in-out;
+          }
+        }
+      }
+    }
+
+    .checkMark {
+      text-align: center;
+      margin-top: 2rem;
+      transition: all 0.35s ease-in-out;
+
+      .checkmark {
+        width: 100px;
+        height: 100px;
+        stroke: var(--whiteColor);
+        stroke-width: 2;
+        stroke-linecap: round;
+        animation: stroke 0.7s ease-in-out forwards,
+          bounce 0.7s infinite ease 1.35s;
+        transition: all 0.35s ease-in-out;
+
+        .checkmark__circle {
+          stroke-dasharray: 166;
+          stroke-dashoffset: 166;
+          animation: dash 0.7s ease-in-out forwards;
+          transition: all 0.35s ease-in-out;
+        }
+
+        .checkmark__check {
+          stroke-dasharray: 48;
+          stroke-dashoffset: 48;
+          animation: dash-check 0.7s ease 0.7s forwards;
+          transition: all 0.35s ease-in-out;
+        }
+      }
+
+      @keyframes dash {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes dash-check {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes rubber {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.3);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      p {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: yellowgreen;
+        transition: all 0.35s ease-in-out;
+      }
+    }
+  }
+
+  @keyframes zoomIn {
+    0% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .modalOverlay {
+    .modalContent {
+      width: 88%;
+      transition: all 0.35s ease-in-out;
+
+      .formHeadingDiv {
+        margin-bottom: 70px;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .progressForm {
+        .progressSteps {
+          width: 35px;
+          height: 35px;
+          transition: all 0.35s ease-in-out;
+
+          &.progressStepActive {
+            width: 35px;
+            height: 35px;
+            transition: all 0.35s ease-in-out;
+
+            &::before {
+              content: counter(step);
+              transition: all 0.35s ease-in-out;
+            }
+
+            &::after {
+              content: attr(data-title);
+              position: absolute;
+              top: -50px;
+              transition: all 0.35s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+  }
+}

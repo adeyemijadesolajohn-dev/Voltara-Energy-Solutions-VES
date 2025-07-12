@@ -1,0 +1,263 @@
+.main-map-canvas-container {
+  position: relative;
+  width: 97%;
+  height: 400px;
+  overflow: hidden;
+  margin-inline: 20px;
+}
+
+.map-main {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Map Control Buttons (General Styling) --- */
+.map-control-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+
+  &:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* --- Specific Button Positioning --- */
+.burger-menu-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.map-options-dropdown-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+
+  .options-button {
+    padding: 10px;
+  }
+}
+
+.zoom-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .map-control-button {
+    padding: 8px 15px;
+  }
+}
+
+.overlay-toggle-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 10px;
+}
+
+/* --- Sidebar Styling (Custom Marker Form) --- */
+.map-controls-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 999;
+  padding: 15px;
+
+  &.open {
+    transform: translateX(0);
+  }
+
+  .map-controls-inner {
+    padding: 0;
+    max-height: 400px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.1em;
+    }
+    p.sidebar-note {
+      font-size: 0.75em;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      input[type="number"],
+      input[type="text"],
+      textarea {
+        padding: 6px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 0.85em;
+      }
+
+      input[type="color"] {
+        height: 30px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+      }
+
+      button[type="submit"] {
+        background-color: #28a745;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9em;
+        &:hover {
+          background-color: #218838;
+        }
+      }
+    }
+  }
+}
+
+/* --- Options Dropdown Styling --- */
+.options-dropdown-content {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin-top: 10px;
+  width: 222px;
+  max-height: 300px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: absolute;
+  top: 35px;
+  right: 0px;
+  z-index: 1000;
+
+  h3,
+  h4 {
+    margin: 5px 0 8px 0;
+    font-size: 1.05em;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+  }
+
+  .base-map-toggles,
+  .layer-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .layer-toggle-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.85em;
+    color: #555;
+    padding: 2px 0;
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      margin-right: 5px;
+      transform: scale(0.9);
+    }
+  }
+}
+
+/* --- Search Bar Styling --- */
+.search-bar-container {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  gap: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+
+  input[type="text"] {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    width: 250px;
+    outline: none;
+    &:focus {
+      box-shadow: inset 0 0 0 2px #007bff;
+    }
+  }
+
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 0 4px 4px 0;
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}
+
+/* --- Tooltip Styling --- */
+.map-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  z-index: 1001;
+}

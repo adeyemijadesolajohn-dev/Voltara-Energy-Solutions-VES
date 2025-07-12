@@ -1,0 +1,180 @@
+$blur: 3.5px;
+$glass-bg: rgba(255, 255, 255, 0.35);
+$glass-border: 2px inset rgba(255, 255, 255, 0.55);
+$glass-shadow: 0 3.5px 7px rgba(0, 0, 0, 0.7),
+  inset 0 1px 0 rgba(255, 255, 255, 0.5),
+  inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+  inset 0 0 20px 12px rgba(255, 255, 255, 0.2);
+$transition: all 0.35s ease-in-out;
+
+// ── Re‑usable mixins & placeholders ── //
+@mixin flex($jc: center, $ai: center, $gap: 7px) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+  gap: $gap;
+}
+
+%glass {
+  position: relative;
+  border: $glass-border;
+  background: $glass-bg;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  box-shadow: $glass-shadow;
+  overflow: hidden;
+  transition: $transition;
+}
+
+// ── Card component ── //
+.gridCard {
+  @extend %glass;
+  @include flex(flex-start, center, 12px);
+  flex-direction: column;
+  padding: 12px;
+  border-radius: 12px;
+  width: 100%;
+  transition: $transition;
+
+  // Decorative chrome (top / left gradients)
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    transition: $transition;
+  }
+  &::before {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.8),
+      transparent
+    );
+    transition: $transition;
+  }
+  &::after {
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.8),
+      transparent,
+      rgba(255, 255, 255, 0.3)
+    );
+    transition: $transition;
+  }
+
+  // ── Title bar ── //
+  .cardTitle {
+    @include flex(space-between, center);
+    width: 100%;
+    padding-bottom: 7px;
+    border-bottom: 2px solid var(--secondaryColor);
+    transition: $transition;
+
+    .cardTitleContainer {
+      @include flex(center, center, 7px);
+      transition: $transition;
+
+      .titleIcon {
+        font-size: 23.5px;
+        color: var(--whiteColor);
+        transition: $transition;
+      }
+
+      .cardTitleText {
+        color: var(--whiteColor);
+        transition: $transition;
+      }
+    }
+
+    .buttonContainer {
+      @include flex(center, center, 12px);
+      transition: $transition;
+    }
+
+    .buttonItem {
+      @include flex(center, center);
+      border: 2px outset transparent;
+      background: none;
+      color: var(--whiteColor);
+      padding: 3.5px;
+      border-radius: 7px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      transition: $transition;
+
+      &:hover {
+        border: 2px inset whitesmoke;
+        background: #fff;
+        color: var(--primaryColor);
+        box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px;
+        transform: scale(1.35);
+        transition: $transition;
+      }
+
+      &.active {
+        padding: 5.5px 15px;
+        font-weight: 1000;
+        border: 2px outset whitesmoke;
+        box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px,
+          rgba(0, 0, 0, 0.7) 0 8px 12px -5px;
+        transition: $transition;
+      }
+
+      .buttonIcon {
+        font-size: 13.5px;
+        font-weight: bolder;
+        transition: $transition;
+      }
+    }
+  }
+
+  // ── Body ── //
+  .cardContent {
+    width: 100%;
+    height: 100%;
+    @include flex(space-between, flex-start, 13.5px);
+    flex-direction: column;
+    padding: 13.5px;
+    transition: $transition;
+
+    .cardItems {
+      @include flex(space-between, center);
+      width: 100%;
+      transition: $transition;
+
+      .cardItemLeft {
+        @include flex(center, center, 7px);
+        transition: $transition;
+
+        .cardIcon {
+          font-size: 20px;
+          color: var(--whiteColor);
+          transition: $transition;
+        }
+
+        .cardText {
+          font-weight: 555;
+          color: var(--whiteColor);
+          transition: $transition;
+        }
+      }
+
+      .cardItemRight {
+        @include flex(flex-end, center);
+        transition: $transition;
+
+        .cardNumber {
+          color: var(--whiteColor);
+          transition: $transition;
+        }
+      }
+    }
+  }
+}

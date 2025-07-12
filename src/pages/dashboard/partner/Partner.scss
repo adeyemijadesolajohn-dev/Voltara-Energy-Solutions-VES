@@ -1,0 +1,125 @@
+.partnerPage {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s ease-in-out;
+
+  .partnerTitle {
+    position: fixed;
+    left: 0;
+    padding: 7px 13.5px;
+    display: flex;
+    width: 100%;
+    transition: all 0.35s ease-in-out;
+
+    .partnerLogo {
+      width: 200px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.35s ease-in-out;
+      border-bottom-left-radius: 35px;
+      border-top-right-radius: 35px;
+      overflow: hidden;
+      background-color: var(--whiteColor);
+      border: 3.5px inset whitesmoke;
+
+      .partnerLogoImage {
+        width: 55px;
+        object-fit: contain;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .partnerLogoName {
+        .partnerLogoText {
+          font-size: 20px;
+          text-align: right;
+          color: var(--primaryColor);
+          font-weight: 800;
+          transition: all 0.35s ease-in-out;
+        }
+
+        .partnerLogoSubText {
+          font-size: 10px;
+          text-align: right;
+          color: var(--secondaryColor);
+          font-weight: 500;
+          margin-top: -5.5px;
+          padding-bottom: 2px;
+          transition: all 0.35s ease-in-out;
+          -webkit-text-stroke: 0.35px var(--primaryColor);
+        }
+      }
+    }
+  }
+
+  .partnerContent {
+    display: flex;
+    width: 100%;
+    transition: all 0.35s ease-in-out;
+
+    .partnerContainer {
+      width: 100%;
+      flex: 5.5;
+      padding: 12px 0px 0px;
+      transition: all 0.35s ease-in-out;
+
+      .partnerWidgets {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        padding: 35px 35px 12px;
+        gap: 20px;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .partnerTable {
+        width: 100%;
+        padding: 20px;
+        transition: all 0.35s ease-in-out;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1240px) {
+  .partnerPage {
+    .partnerContent {
+      .partnerContainer {
+        .partnerWidgets {
+          grid-template-columns: repeat(2, 1fr);
+          transition: all 0.35s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .partnerPage {
+    .partnerTitle {
+      margin-top: 23.5px;
+      transition: all 0.35s ease-in-out;
+
+      .partnerLogo {
+        padding-top: 7px;
+        width: 55px;
+        height: 55px;
+        transition: all 0.35s ease-in-out;
+        border-radius: 50%;
+      }
+
+      .partnerLogoImage {
+        width: 35px;
+        height: 35px;
+        object-fit: contain;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .partnerLogoName {
+        display: none;
+        transition: all 0.35s ease-in-out;
+      }
+    }
+  }
+}

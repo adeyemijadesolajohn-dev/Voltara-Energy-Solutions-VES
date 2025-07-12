@@ -1,0 +1,248 @@
+.featuredContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border: 2px inset rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 3.5px 7px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 20px 12px rgba(255, 255, 255, 0.2);
+  padding: 12px;
+  border-radius: 12px;
+  width: 100%;
+  overflow: hidden;
+  transition: all 0.35s ease-in-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.8),
+      transparent
+    );
+    transition: all 0.35s ease-in-out;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.8),
+      transparent,
+      rgba(255, 255, 255, 0.3)
+    );
+    transition: all 0.35s ease-in-out;
+  }
+
+  .featuredTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 2px solid var(--secondaryColor);
+    padding-bottom: 7px;
+    transition: all 0.35s ease-in-out;
+
+    .featuredTitleContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all 0.35s ease-in-out;
+
+      .featuredIcon {
+        transition: all 0.35s ease-in-out;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        overflow: hidden;
+        height: 22px;
+        width: 22px;
+        color: var(--whiteColor);
+
+        .bGIcon {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          transition: all 0.35s ease-in-out;
+        }
+
+        .topIcon {
+          height: 12px;
+          width: 12px;
+          position: relative;
+          transition: all 0.35s ease-in-out;
+        }
+      }
+
+      .featuredTitleText {
+        display: block;
+        color: var(--whiteColor);
+        transition: all 0.35s ease-in-out;
+      }
+    }
+
+    .featuredRightContainer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 13.5px;
+      transition: all 0.35s ease-in-out;
+
+      .featuredDateContainer {
+        background-color: var(--whiteColor);
+        color: var(--primaryColor);
+        box-shadow: inset rgba(0, 0, 0, 0.35) 0 2px 7px 2px;
+        padding: 2px 13.5px;
+        box-sizing: border-box;
+        border-radius: 7px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        transition: all 0.35s ease-in-out;
+
+        &:hover {
+          box-shadow: rgba(0, 0, 0, 0.35) 0 2px 7px 2px;
+          color: var(--primaryColor);
+          transform: scale(1.1);
+          transition: all 0.35s ease-in-out;
+        }
+
+        .featuredDate {
+          display: block;
+          text-shadow: 0 0 3.5px rgba(0, 0, 0, 0.7);
+          transition: all 0.35s ease-in-out;
+        }
+      }
+
+      .buttonContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.35s ease-in-out;
+
+        .buttonItem {
+          border: 2px outset transparent;
+          outline: none;
+          box-sizing: border-box;
+          background-color: unset;
+          color: var(--whiteColor);
+          padding: 3.5px;
+          border-radius: 7px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          transition: all 0.35s ease-in-out;
+
+          &:hover {
+            border: 2px inset whitesmoke;
+            background-color: #fff;
+            box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px;
+            color: var(--primaryColor);
+            transform: scale(1.35);
+            transition: all 0.35s ease-in-out;
+          }
+
+          &.active {
+            box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px,
+              rgba(0, 0, 0, 0.7) 0 8px 12px -5px;
+            padding: 5.5px 15px;
+            column-gap: 12px;
+            border: 2px outset whitesmoke;
+            font-weight: 1000;
+            transition: all 0.35s ease-in-out;
+          }
+
+          .buttonIcon {
+            display: block;
+            font-size: 13.5px;
+            font-weight: bolder;
+            transition: all 0.35s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+
+  .featuredContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s ease-in-out;
+
+    .dataList {
+      transition: all 0.35s ease-in-out;
+
+      .dataItem {
+        margin-bottom: 7px;
+        color: var(--secondaryColor);
+        transition: all 0.35s ease-in-out;
+        text-align: right;
+      }
+
+      .dataItemValue {
+        display: block;
+        font-weight: 700;
+        color: var(--whiteColor);
+        transition: all 0.35s ease-in-out;
+      }
+    }
+
+    .featuredChart {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.35s ease-in-out;
+
+      .percent {
+        position: relative;
+        transition: all 0.35s ease-in-out;
+
+        .number {
+          position: absolute;
+          top: 47%;
+          left: 59%;
+          transform: translate(-50%, -50%);
+          transition: all 0.35s ease-in-out;
+          color: var(--whiteColor);
+
+          .numberValue {
+            font-size: 20px;
+            transition: all 0.35s ease-in-out;
+
+            .numberPercent {
+              font-size: 13.5px;
+              transition: all 0.35s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+  }
+}

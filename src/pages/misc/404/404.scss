@@ -1,0 +1,71 @@
+// Variables
+$color-error-base: #dc3545;
+$color-error-bg: #f8d7da;
+$color-error-border: #f5c6cb;
+$color-text-dark: #333;
+$color-gray-text: #6c757d;
+
+.error-display-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 400px;
+  padding: 30px 20px;
+  border: 1px solid $color-error-border;
+  border-radius: 8px;
+  background-color: $color-error-bg;
+  color: $color-error-base;
+}
+
+.error-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+  stroke-width: 2px; // Use stroke for icon lines
+
+  &.network {
+    stroke: #ff7f50; // Coral
+  }
+  &.auth {
+    stroke: #3498db; // Blue
+  }
+  &.validation {
+    stroke: #f1c40f; // Yellow
+  }
+  &.server {
+    stroke: #c0392b; // Dark Red
+  }
+  &.not-found {
+    stroke: #95a5a6; // Gray
+  }
+  &.access-denied {
+    stroke: #e74c3c; // Red
+  }
+  &.generic {
+    stroke: $color-error-base;
+  }
+}
+
+.error-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: $color-text-dark;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  font-size: 1em;
+  color: $color-gray-text;
+  line-height: 1.4;
+}

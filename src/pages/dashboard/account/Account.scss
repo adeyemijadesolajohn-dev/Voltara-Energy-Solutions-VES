@@ -1,0 +1,215 @@
+.accountPage {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s ease-in-out;
+
+  .accountTitle {
+    position: fixed;
+    left: 0;
+    padding: 7px 13.5px;
+    display: flex;
+    width: 100%;
+    transition: all 0.35s ease-in-out;
+
+    .accountLogo {
+      width: 200px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.35s ease-in-out;
+      border-bottom-left-radius: 35px;
+      border-top-right-radius: 35px;
+      overflow: hidden;
+      background-color: var(--whiteColor);
+      border: 3.5px inset whitesmoke;
+
+      .accountLogoImage {
+        width: 55px;
+        object-fit: contain;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .accountLogoName {
+        .accountLogoText {
+          font-size: 20px;
+          text-align: right;
+          color: var(--primaryColor);
+          font-weight: 800;
+          transition: all 0.35s ease-in-out;
+        }
+
+        .accountLogoSubText {
+          font-size: 10px;
+          text-align: right;
+          color: var(--secondaryColor);
+          font-weight: 500;
+          margin-top: -5.5px;
+          padding-bottom: 2px;
+          transition: all 0.35s ease-in-out;
+          -webkit-text-stroke: 0.35px var(--primaryColor);
+        }
+      }
+    }
+  }
+
+  .accountContent {
+    display: flex;
+    width: 100%;
+    transition: all 0.35s ease-in-out;
+
+    .accountContainer {
+      width: 100%;
+      flex: 5.5;
+      padding: 12px 0px 0px;
+      transition: all 0.35s ease-in-out;
+
+      .accountWidgets {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        padding: 35px 35px 12px;
+        gap: 20px;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .accountBars {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 0px 20px;
+        gap: 13.5px;
+        transition: all 0.35s ease-in-out;
+
+        .accountBarsTitle {
+          background-color: rgba(255, 255, 255, 0.2);
+          border: 1.35px outset rgba(255, 255, 255, 0.55);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 7px 20px;
+          border-radius: 12px;
+          transition: all 0.35s ease-in-out;
+
+          .accountBarsText {
+            color: var(--whiteColor);
+            font-weight: 555;
+            text-shadow: 0 0 7px rgba(0, 0, 0, 1);
+            transition: all 0.35s ease-in-out;
+          }
+
+          .accountBarsButtons {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 7px;
+            transition: all 0.35s ease-in-out;
+
+            .accountDateContainer {
+              background-color: var(--whiteColor);
+              color: var(--primaryColor);
+              box-shadow: inset rgba(0, 0, 0, 0.35) 0 2px 7px 2px;
+              padding: 2px 13.5px;
+              box-sizing: border-box;
+              border-radius: 7px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+              transition: all 0.35s ease-in-out;
+
+              &:hover {
+                box-shadow: rgba(0, 0, 0, 0.35) 0 2px 7px 2px;
+                color: var(--primaryColor);
+                transform: scale(1.1);
+                transition: all 0.35s ease-in-out;
+              }
+
+              .accountDate {
+                display: block;
+                text-shadow: 0 0 3.5px rgba(0, 0, 0, 0.7);
+                transition: all 0.35s ease-in-out;
+              }
+            }
+
+            .accountBarsButton {
+              padding: 7px;
+              font-size: 20px;
+              color: var(--whiteColor);
+              background-color: unset;
+              border: 2px outset transparent;
+              border-radius: 13.5px;
+              cursor: pointer;
+              transition: all 0.35s ease-in-out;
+
+              &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                border: 2px outset rgba(255, 255, 255, 0.55);
+                box-shadow: rgba(0, 0, 0, 0.2) 0 3.5px 12px inset,
+                  0 2px 7px rgba(0, 0, 0, 0.7);
+                transform: scale(1.23);
+                transition: all 0.35s ease-in-out;
+              }
+
+              .accountBarsIcon {
+                display: block;
+              }
+            }
+          }
+        }
+
+        .accountBarsContainer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          gap: 13.5px;
+          transition: all 0.35s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1240px) {
+  .accountPage {
+    .accountContent {
+      .accountContainer {
+        .accountWidgets {
+          grid-template-columns: repeat(2, 1fr);
+          transition: all 0.35s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .accountPage {
+    .accountTitle {
+      margin-top: 23.5px;
+      transition: all 0.35s ease-in-out;
+
+      .accountLogo {
+        padding-top: 7px;
+        width: 55px;
+        height: 55px;
+        transition: all 0.35s ease-in-out;
+        border-radius: 50%;
+      }
+
+      .accountLogoImage {
+        width: 35px;
+        height: 35px;
+        object-fit: contain;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .accountLogoName {
+        display: none;
+        transition: all 0.35s ease-in-out;
+      }
+    }
+  }
+}

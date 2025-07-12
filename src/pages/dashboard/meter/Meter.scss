@@ -1,0 +1,119 @@
+.meterPage {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s ease-in-out;
+
+  .meterTitle {
+    position: fixed;
+    left: 0;
+    padding: 7px 13.5px;
+    display: flex;
+    width: 100%;
+    transition: all 0.35s ease-in-out;
+
+    .meterLogo {
+      width: 200px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.35s ease-in-out;
+      border-bottom-left-radius: 35px;
+      border-top-right-radius: 35px;
+      overflow: hidden;
+      background-color: var(--whiteColor);
+      border: 3.5px inset whitesmoke;
+
+      .meterLogoImage {
+        width: 55px;
+        object-fit: contain;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .meterLogoName {
+        .meterLogoText {
+          font-size: 20px;
+          text-align: right;
+          color: var(--primaryColor);
+          font-weight: 800;
+          transition: all 0.35s ease-in-out;
+        }
+
+        .meterLogoSubText {
+          font-size: 10px;
+          text-align: right;
+          color: var(--secondaryColor);
+          font-weight: 500;
+          margin-top: -5.5px;
+          padding-bottom: 2px;
+          transition: all 0.35s ease-in-out;
+          -webkit-text-stroke: 0.35px var(--primaryColor);
+        }
+      }
+    }
+  }
+
+  .meterContent {
+    display: flex;
+    width: 100%;
+    transition: all 0.35s ease-in-out;
+
+    .meterContainer {
+      width: 100%;
+      flex: 5.5;
+      padding: 12px 0px 0px;
+      transition: all 0.35s ease-in-out;
+
+      .meterWidgets {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        padding: 35px 35px 12px;
+        gap: 20px;
+        transition: all 0.35s ease-in-out;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1240px) {
+  .meterPage {
+    .meterContent {
+      .meterContainer {
+        .meterWidgets {
+          grid-template-columns: repeat(2, 1fr);
+          transition: all 0.35s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .meterPage {
+    .meterTitle {
+      margin-top: 23.5px;
+      transition: all 0.35s ease-in-out;
+
+      .meterLogo {
+        padding-top: 7px;
+        width: 55px;
+        height: 55px;
+        transition: all 0.35s ease-in-out;
+        border-radius: 50%;
+      }
+
+      .meterLogoImage {
+        width: 35px;
+        height: 35px;
+        object-fit: contain;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .meterLogoName {
+        display: none;
+        transition: all 0.35s ease-in-out;
+      }
+    }
+  }
+}

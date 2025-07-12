@@ -69,6 +69,7 @@ import {
   TbArrowAutofitContent as Allocate,
   TbRosetteDiscount as Discount,
   TbTableExport as TableExport,
+  TbError404 as GenericError,
 } from "react-icons/tb";
 import { AiOutlinePhone as PhoneNumber } from "react-icons/ai";
 import {
@@ -78,6 +79,7 @@ import {
   BsFillCalendar2WeekFill as WeeklyOverview,
   BsCalendarEvent as Calendar,
   BsFillLightningFill as Power,
+  BsDatabaseExclamation as DatabaseError,
 } from "react-icons/bs";
 import {
   MdCrisisAlert as Alert,
@@ -101,6 +103,7 @@ import {
 import {
   LiaMoneyBillWaveSolid as Bills,
   LiaIndustrySolid as Industrial,
+  LiaUserAltSlashSolid as AccessDenied,
 } from "react-icons/lia";
 import {
   RiCheckboxMultipleFill as Check,
@@ -117,6 +120,7 @@ import {
   RiShareForward2Fill as Share2,
   RiMailSendLine as EmailShare,
   RiLineChartFill as LineChart,
+  RiSignalWifiErrorLine as NetWorkError,
 } from "react-icons/ri";
 import {
   BiSearchAlt as Search,
@@ -140,6 +144,8 @@ import {
   LuInfo as Info,
   LuMapPinHouse as Location,
   LuCalendarClock as TimeDate,
+  LuGlobeLock as AuthLock,
+  LuSearchX as NotFound,
 } from "react-icons/lu";
 import {
   PiCheckSquareOffsetBold as StatusCheck,
@@ -332,6 +338,12 @@ export const Icons = {
   Active,
   Inactive,
   Pending,
+  NetWorkError,
+  AuthLock,
+  DatabaseError,
+  NotFound,
+  AccessDenied,
+  GenericError,
 };
 
 export const Public = {

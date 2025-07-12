@@ -326,6 +326,15 @@ video {
   transition: all 2s ease-in-out;
 }
 
+.loading-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-size: 1.2rem;
+  color: #333;
+}
+
 ::-webkit-scrollbar {
   width: 12px;
 }

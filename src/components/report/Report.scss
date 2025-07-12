@@ -1,0 +1,148 @@
+/* ── Glass-morphism variables ── */
+$blur: 3.5px;
+$glass-bg: rgba(255, 255, 255, 0.35);
+$glass-border: 2px inset rgba(255, 255, 255, 0.55);
+$glass-shadow: 0 3.5px 7px rgba(0, 0, 0, 0.7),
+  inset 0 1px 0 rgba(255, 255, 255, 0.5),
+  inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+  inset 0 0 20px 12px rgba(255, 255, 255, 0.2);
+
+/* ── Utility mixin for flexbox ── */
+@mixin flex($jc: center, $ai: center, $gap: 0) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+  gap: $gap;
+}
+
+/* ── Re-usable glass placeholder ── */
+%glass {
+  position: relative;
+  border: $glass-border;
+  background: $glass-bg;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  box-shadow: $glass-shadow;
+  overflow: hidden;
+}
+
+/* ──────────────────────────────────────────────────────── */
+.gridReport {
+  @extend %glass;
+  @include flex(space-between, center, 12px);
+  flex-direction: column;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  transition: all 0.35s ease-in-out;
+
+  /* decorative chrome */
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    transition: inherit;
+  }
+  &::before {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.8),
+      transparent
+    );
+  }
+  &::after {
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.8),
+      transparent,
+      rgba(255, 255, 255, 0.3)
+    );
+  }
+
+  /* ── header (title + actions) ── */
+  .reportTitle {
+    @include flex(space-between, center);
+    width: 100%;
+    padding-bottom: 7px;
+    border-bottom: 2px solid var(--secondaryColor);
+
+    .reportTitleContainer {
+      @include flex(center, center, 7px);
+      .titleIcon {
+        font-size: 23.5px;
+        color: var(--whiteColor);
+      }
+      .reportTitleText {
+        color: var(--whiteColor);
+      }
+    }
+
+    .reportRightContainer {
+      @include flex(space-between, center, 13.5px);
+
+      /* date badge */
+      .reportDateContainer {
+        @include flex(center, center);
+        padding: 2px 13.5px;
+        border-radius: 7px;
+        background: var(--whiteColor);
+        color: var(--primaryColor);
+        box-shadow: inset rgba(0, 0, 0, 0.35) 0 2px 7px 2px;
+        transition: inherit;
+
+        &:hover {
+          box-shadow: rgba(0, 0, 0, 0.35) 0 2px 7px 2px;
+          transform: scale(1.1);
+        }
+        .reportDate {
+          text-shadow: 0 0 3.5px rgba(0, 0, 0, 0.7);
+        }
+      }
+
+      /* action buttons */
+      .buttonContainer {
+        @include flex(center, center, 12px);
+      }
+
+      .buttonItem {
+        @include flex(center, center);
+        padding: 3.5px;
+        border-radius: 7px;
+        border: 2px outset transparent;
+        background: none;
+        color: var(--whiteColor);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+        &:hover {
+          border: 2px inset whitesmoke;
+          background: #fff;
+          color: var(--primaryColor);
+          box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px;
+          transform: scale(1.35);
+        }
+
+        &.active {
+          padding: 5.5px 15px;
+          font-weight: 1000;
+          border: 2px outset whitesmoke;
+          box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px,
+            rgba(0, 0, 0, 0.7) 0 8px 12px -5px;
+        }
+
+        .buttonIcon {
+          font-size: 13.5px;
+          font-weight: bolder;
+        }
+      }
+    }
+  }
+}

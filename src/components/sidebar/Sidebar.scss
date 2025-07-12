@@ -1,0 +1,303 @@
+/* --------------------------------
+   Helpers
+---------------------------------*/
+$t: 0.35s ease-in-out;
+
+%nav-hover {
+  border: 2px inset whitesmoke;
+  background: #fff;
+  box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px;
+  color: var(--primaryColor);
+  transform: scale(1.1);
+  transition: $t;
+}
+
+%nav-active {
+  @extend %nav-hover;
+  box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px,
+    rgba(0, 0, 0, 0.7) 0 8px 12px -5px;
+  padding: 5.5px 15px;
+  column-gap: 12px;
+  border: 2px outset whitesmoke;
+  font-weight: 1000;
+  transition: $t;
+}
+
+/* --------------------------------
+   Collapsed state
+---------------------------------*/
+.sidebarDown {
+  margin-left: -288px;
+  transition: $t;
+}
+
+/* --------------------------------
+   Main container
+---------------------------------*/
+.sideBarContainer {
+  background: var(--secondaryColor);
+  width: 288px;
+  min-height: 100vh;
+  box-shadow: 2px 3.5px 7px rgba(0, 0, 0, 0.55);
+  transition: $t;
+
+  .sideBarContent {
+    position: fixed;
+    width: inherit;
+    padding-inline: 13.5px;
+    transition: $t;
+
+    /* ─── Top ─── */
+    .sideBarTop {
+      padding-top: 80px;
+      color: var(--primaryColor);
+      transition: $t;
+
+      .clientLogoImg {
+        width: 200px;
+        height: 70px;
+        border-radius: 35px 0 35px 0;
+        background: var(--whiteColor);
+        border: 3.5px inset whitesmoke;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        transition: $t;
+
+        &:hover {
+          border: 3.5px outset whitesmoke;
+          box-shadow: inset rgba(0, 0, 0, 0.35) 0 20px 25px -5px;
+          transition: $t;
+        }
+
+        .clientLogoPhoto {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: inherit;
+          transition: $t;
+        }
+
+        #clientLogoFile {
+          display: none;
+          transition: $t;
+        }
+
+        #uploadBtn {
+          position: absolute;
+          top: -100%;
+          right: 0;
+          width: 22px;
+          height: 22px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 12px;
+          color: var(--whiteColor);
+          background: var(--secondaryColor);
+          border-radius: 8px 0 0 8px;
+          padding: 3.5px;
+          opacity: 0.7;
+          cursor: pointer;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+          transition: $t;
+
+          &:hover {
+            opacity: 1;
+            background: var(--primaryColor);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+            transition: $t;
+          }
+        }
+      }
+
+      .clientName {
+        font: 700 20px/1 var(--fontFamily, inherit);
+        margin: 3.5px 0;
+        text-shadow: 2px 2px 3.5px rgba(0, 0, 0, 0.35);
+        transition: $t;
+      }
+    }
+
+    /* separators */
+    hr {
+      height: 2px;
+      width: 100%;
+      border: none;
+      background: rgba(255, 255, 255, 0.25);
+      transition: $t;
+    }
+
+    .sideBarCenter {
+      padding-block: 7px;
+      transition: $t;
+    }
+
+    .sideBarBottom {
+      margin-top: 70px;
+      transition: $t;
+    }
+
+    /* ─── Nav wrapper ─── */
+    .navContainer {
+      margin-block: 7px;
+      transition: $t;
+
+      .navContent {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        font: 700 13.5px/1 var(--fontFamily, inherit);
+        cursor: pointer;
+        transition: $t;
+
+        .navObject {
+          position: relative;
+          border: 2px inset transparent;
+          border-radius: 7px;
+          padding: 5.5px 7px;
+          width: 88%;
+          transition: $t;
+
+          &::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            transform: translateY(50%) translateX(80px);
+            white-space: nowrap;
+            background: hsla(0, 0%, 100%, 0.7);
+            backdrop-filter: blur(3.5px);
+            color: var(--primaryColor);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3.5px 7px;
+            border-radius: 7px;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 0 2px 7px rgba(0, 0, 0, 0.35);
+            transition: opacity 1.35s ease-in-out, transform 1.35s ease-in-out;
+          }
+
+          /* show on hover OR keyboard focus inside */
+          &:hover::after,
+          &:focus-within::after {
+            opacity: 1;
+            transform: translateY(50%) translateX(0px);
+            transition: opacity 1.35s ease-in-out, transform 1.35s ease-in-out;
+          }
+
+          .navPath {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            width: 100%;
+            transition: $t;
+
+            .navIcon {
+              font-size: 23.5px;
+              color: var(--primaryColor);
+              margin-right: 13.5px;
+              transition: $t;
+            }
+
+            .navText {
+              font-size: 13.5px;
+              color: var(--primaryColor);
+              transition: $t;
+            }
+          }
+
+          &:hover {
+            @extend %nav-hover;
+          }
+          &.active {
+            @extend %nav-active;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* --------------------------------
+   Responsive – ≤1024 px
+---------------------------------*/
+@media (max-width: 1024px) {
+  .sidebarDown {
+    margin-left: -80px;
+    transition: $t;
+  }
+
+  .sideBarContainer {
+    width: 80px;
+    transition: $t;
+
+    .sideBarContent {
+      width: inherit;
+      padding-left: 13.5px;
+      transition: $t;
+
+      .sideBarTop {
+        padding: 93px 0 70px;
+        transition: $t;
+
+        .clientLogoImg {
+          width: 55px;
+          height: 55px;
+          border-radius: 50%;
+          transition: $t;
+
+          .clientLogoPhoto {
+            object-fit: contain;
+            transition: $t;
+          }
+        }
+
+        .clientName {
+          display: none;
+          transition: $t;
+        }
+      }
+
+      .sideBarBottom {
+        margin-top: 12px;
+        transition: $t;
+      }
+
+      .navContainer .navContent {
+        align-items: center;
+        text-align: center;
+        transition: $t;
+
+        .navObject {
+          .navPath {
+            justify-content: center;
+            transition: $t;
+
+            .navIcon {
+              margin-right: 0;
+              transition: $t;
+            }
+
+            .navText {
+              display: none;
+              transition: $t;
+            }
+          }
+
+          &:hover {
+            transform: scale(1.23);
+            transition: $t;
+          }
+
+          &.active {
+            padding: 5.5px;
+            transform: scale(1.35);
+            transition: $t;
+          }
+        }
+      }
+    }
+  }
+}

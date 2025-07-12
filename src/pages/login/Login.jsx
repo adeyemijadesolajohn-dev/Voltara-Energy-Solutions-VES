@@ -2,79 +2,75 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
 import "../../App.scss";
-import { Icons, Public } from "../../data/Assets";
+import { Public, Icons } from "../../data/Assets";
+import DevToggle from "../../components/dev/DevToggle";
 
 const Login = () => {
-  // Initialize formData with values from localStorage if "Remember Me" was checked
-  const [formData, setFormData] = useState(() => {
-    const savedEmail = localStorage.getItem("rememberedEmail");
-    return {
-      email: savedEmail || "",
-      password: "",
-    };
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
   });
-
   const [showPassword, setShowPassword] = useState(false);
-  const [loginError, setLoginError] = useState(""); // State for login error messages
-  const [rememberMe, setRememberMe] = useState(() => {
-    // Initialize rememberMe state from localStorage
-    return localStorage.getItem("rememberMe") === "true";
-  });
+  const [rememberMe, setRememberMe] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [apiMessage, setApiMessage] = useState({ type: "", text: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
-  // Effect to set initial form data if "Remember Me" is active
+  // useEffect for auto-login on component mount
   useEffect(() => {
-    if (rememberMe) {
-      const savedEmail = localStorage.getItem("rememberedEmail");
+    const userId = localStorage.getItem("userId");
+    const userEmail = localStorage.getItem("userEmail");
+    const remembered = localStorage.getItem("rememberMe"); // Get the rememberMe flag
 
-      setFormData((prev) => ({
-        ...prev,
-        email: savedEmail || prev.email,
-      }));
-    }
-  }, [rememberMe]); // Run once when component mounts and rememberMe state changes
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    setLoginError(""); // Clear error message on input change
-  };
-
-  const handleRememberMeChange = (e) => {
-    setRememberMe(e.target.checked);
-    localStorage.setItem("rememberMe", e.target.checked); // Persist rememberMe state
-    if (!e.target.checked) {
-      // If unchecked, clear remembered credentials
-      localStorage.removeItem("rememberedEmail");
-      // localStorage.removeItem
-    }
-  };
-
-  const handleForgotPassword = () => {
-    const userEmail = prompt("Please enter your email to reset your password:");
-    if (userEmail) {
-      // Basic validation for email format (can be more robust)
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)) {
-        alert("Please enter a valid email address.");
-        return;
-      }
-      // Simulate API call for forgot password
-      console.log(`Sending password reset link to: ${userEmail}`);
-      alert(
-        `A password reset link has been sent to ${userEmail}. Please check your inbox.`
+    // Only redirect the user if a session exists AND the rememberMe flag is true
+    if (userId && userEmail && remembered === "true") {
+      console.log(
+        "Existing remembered session found. Redirecting to dashboard."
       );
-    } else if (userEmail === "") {
-      alert("Email cannot be empty.");
+      navigate(`/SelectDashboard/${userId}`);
     }
+  }, [navigate]);
+
+  const togglePasswordType = () => setShowPassword((prev) => !prev);
+  const handleRememberMeChange = (e) => setRememberMe(e.target.checked);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+    setApiMessage({ type: "", text: "" });
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+    if (!formData.password) newErrors.password = "Password is required";
+    return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoginError(""); // Clear previous errors
+    const validationErrors = validate();
+    setErrors(validationErrors);
+    setApiMessage({ type: "", text: "" });
+
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
-      const res = await fetch("http://45.55.133.211:5144/api/users/login", {
+      const loginRes = await fetch("/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,181 +81,186 @@ const Login = () => {
         }),
       });
 
-      const data = await res.json();
+      const loginData = await loginRes.json();
 
-      if (!res.ok) {
-        // Clear stored user data on failed login
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("rememberedEmail"); // Also clear remembered email on failed login
-        localStorage.setItem("rememberMe", "false"); // Set rememberMe to false
-        setRememberMe(false); // Update state
-
-        // Set specific error message based on API response or default
-        setLoginError(
-          data.message || "Invalid email or password. Please try again."
-        );
-        return; // Stop execution if login failed
+      if (!loginRes.ok) {
+        let errorText =
+          loginData.message || "Login failed. Please check your credentials.";
+        setApiMessage({ type: "error", text: errorText });
+        setIsSubmitting(false);
+        return;
       }
 
-      // If login is successful
-      if (data.token) {
-        localStorage.setItem("authToken", data.token);
+      const userEmail = loginData.data.email;
+      localStorage.setItem("userEmail", userEmail);
 
-        // Store user ID if provided by the API response
-        // IMPORTANT: Verify your API response for /api/users/login includes 'id'
-        if (data.id) {
-          localStorage.setItem("userId", data.id);
-        } else {
-          // Fallback: If API doesn't return ID, you might need to make another call
-          // or assume ID is not needed for immediate dashboard navigation
-          console.warn(
-            "Login API did not return user ID. Dashboard navigation might be affected."
-          );
-          // If ID is needed,  make a GET /api/users/me (if available) here
-          // to fetch user details using the token and then get the ID.
+      // Add a small delay to handle potential race conditions with backend
+      setTimeout(async () => {
+        try {
+          const allUsersRes = await fetch("/api/users/all-users");
+          const allUsers = await allUsersRes.json();
+          const currentUser = allUsers.find((user) => user.email === userEmail);
+
+          if (currentUser) {
+            localStorage.setItem("userId", currentUser.id);
+            // Save the rememberMe state to localStorage
+            localStorage.setItem("rememberMe", rememberMe.toString());
+
+            // Navigate to the select dashboard page with the user's ID
+            setApiMessage({
+              type: "success",
+              text: "Login successful! Redirecting...",
+            });
+            navigate(`/SelectDashboard/${currentUser.id}`);
+          } else {
+            console.error("Could not find user ID after successful login.");
+            setApiMessage({
+              type: "error",
+              text: "Login successful, but a routing error occurred. Please try again.",
+            });
+          }
+        } catch (err) {
+          console.error("Error fetching user ID:", err);
+          setApiMessage({
+            type: "error",
+            text: "Network error or server unavailable. Please try again later.",
+          });
+          localStorage.clear(); // Clear storage on critical error
+        } finally {
+          setIsSubmitting(false);
         }
-
-        if (rememberMe) {
-          localStorage.setItem("rememberedEmail", formData.email);
-        } else {
-          // If rememberMe was unchecked, clear stored credentials even on successful login
-          localStorage.removeItem("rememberedEmail");
-        }
-
-        navigate("/SelectDashboard");
-      } else {
-        setLoginError(
-          "Login successful, but no authentication token received."
-        );
-        // Clear any potentially stored data if login was 'successful' but incomplete
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("userId");
-      }
+      }, 1000); // 1-second delay
     } catch (err) {
-      setLoginError("An error occurred during login. Please try again later.");
-      console.error("Login error:", err);
-      // Ensure local storage is cleaned up on network/other errors too
-      localStorage.removeItem("authToken");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("rememberedEmail");
-      localStorage.setItem("rememberMe", "false");
-      setRememberMe(false);
+      console.error("API error:", err);
+      setApiMessage({
+        type: "error",
+        text: "Network error or server unavailable. Please try again later.",
+      });
+      setIsSubmitting(false);
     }
   };
+
+  const isValidInput = (id) =>
+    formData[id] && formData[id].trim() !== "" && !errors[id];
 
   return (
     <div className="flex loginPage">
       <div className="flex container">
         <div className="loginBGDiv">
           <img src={Public.BG} alt="Login Background" />
-
           <div className="loginBGText">
             <h2 className="loginBGHeading">Connecting you to the future</h2>
-
             <p>Create your Connection</p>
           </div>
         </div>
 
         <div className="flex formDiv">
+          <DevToggle />
           <div className="headerDiv">
             <Link to="/" className="logo">
               <img src={Public.Logo} alt="Voltara logo" />
-
               <h4>Voltara</h4>
-
               <p>Energy Solutions</p>
             </Link>
-
-            <h3>Welcome Back</h3>
+            <h3>Welcome Back!</h3>
+            <p className="subHeader">Login to your account.</p>
           </div>
 
           <form className="grid form" onSubmit={handleSubmit}>
-            <h2>Log In</h2>
+            <h2>Sign In</h2>
+            {apiMessage.text && (
+              <p
+                className={`api-message ${
+                  apiMessage.type === "success" ? "success-msg" : "error-msg"
+                }`}
+                style={{
+                  textAlign: "center",
+                  width: "100%",
+                  fontSize: "0.7rem",
+                  fontWeight: "bold",
+                }}
+              >
+                {apiMessage.text}
+              </p>
+            )}
 
             <div className="inputDiv">
-              <div className="flex input">
+              <div
+                className={`flex input ${
+                  isValidInput("email") ? "valid-border" : ""
+                }`}
+              >
                 <Icons.CompanyEmail className="icon" />
-
                 <input
                   type="email"
-                  name="email"
                   id="email"
+                  name="email"
                   placeholder="abc123@email.com"
                   value={formData.email}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   required
-                  maxLength={100} // Input limit for email
                 />
-
                 <label htmlFor="email">Email</label>
               </div>
+              {errors.email && <span className="errorMsg">{errors.email}</span>}
             </div>
 
             <div className="inputDiv">
-              <div className="flex input">
+              <div
+                className={`flex input ${
+                  isValidInput("password") ? "valid-border" : ""
+                }`}
+              >
                 <Icons.Password className="icon" />
-
                 <input
                   type={showPassword ? "text" : "password"}
-                  name="password"
                   id="password"
+                  name="password"
                   placeholder="************"
                   value={formData.password}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   required
-                  maxLength={50} // Input limit for password
                 />
-
                 <label htmlFor="password">Password</label>
-
                 {showPassword ? (
                   <Icons.PasswordShow
                     className="eye"
-                    onClick={() => setShowPassword(false)}
-                    aria-label="Hide password"
+                    onClick={togglePasswordType}
                   />
                 ) : (
                   <Icons.PasswordHide
                     className="eye"
-                    onClick={() => setShowPassword(true)}
-                    aria-label="Show password"
+                    onClick={togglePasswordType}
                   />
                 )}
               </div>
+              {errors.password && (
+                <span className="errorMsg">{errors.password}</span>
+              )}
             </div>
 
             <div className="flex rememberForgot">
-              <label>
+              <div className="rememberMe">
                 <input
                   type="checkbox"
-                  name="remember"
+                  id="rememberMe"
                   checked={rememberMe}
                   onChange={handleRememberMeChange}
                 />
+                <label htmlFor="rememberMe">Remember me</label>
+              </div>
 
-                <span>Remember me</span>
-              </label>
-
-              <a
-                href="#"
-                className="forgot link"
-                onClick={handleForgotPassword}
-              >
-                Forgot Password
-              </a>
+              <a className="link">Forgot Password?</a>
             </div>
 
-            {loginError && <p className="errorMessage">{loginError}</p>}
-
-            <button type="submit" className="btn">
-              <span>Log In</span>
+            <button type="submit" className="btn" disabled={isSubmitting}>
+              {isSubmitting ? "Logging In..." : "Log In"}
             </button>
 
             <div className="registerLinkDiv">
               <span className="text">Don't have an account? </span>
               <Link to="/Register" className="signUp link">
-                Register
+                Sign Up
               </Link>
             </div>
           </form>

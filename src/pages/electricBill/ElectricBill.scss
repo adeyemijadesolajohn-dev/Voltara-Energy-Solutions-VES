@@ -1,0 +1,564 @@
+.electricBill {
+  min-height: 100vh;
+  height: 100vh;
+  width: 100%;
+  margin: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--whiteColor);
+  position: relative;
+  transition: all 0.35s ease-in-out;
+
+  .billBG {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-basis: 70%;
+    height: 100%;
+    padding: 5.5rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: all 0.35s ease-in-out;
+
+    .bgImage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.35s ease-in-out;
+    }
+
+    .leftHeading {
+      position: relative;
+      color: var(--whiteColor);
+      margin-left: 20px;
+      margin-top: 20px;
+      transition: all 0.35s ease-in-out;
+
+      .billHeading {
+        font-size: 35px;
+        font-weight: 700;
+        margin-top: -88px;
+        margin-left: 35px;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .stepContent {
+        margin-top: 35px;
+        color: var(--whiteColor);
+        border: 2px outset rgba(255, 255, 255, 0.7);
+        border-radius: 20px;
+        width: fit-content;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(3.5px);
+        -webkit-backdrop-filter: blur(3.5px);
+        box-shadow: 0 3.5px 7px rgba(0, 0, 0, 1);
+        transition: all 0.35s ease-in-out;
+
+        .stepNumberContent {
+          font-size: 20px;
+          margin-top: 7px;
+          transition: all 0.35s ease-in-out;
+
+          &.active {
+            display: block;
+            transition: all 0.35s ease-in-out;
+          }
+
+          &.dNone {
+            display: none;
+            transition: all 0.35s ease-in-out;
+          }
+        }
+      }
+
+      .progressBar {
+        list-style: none;
+        margin-top: 35px;
+        font-size: 13.5px;
+        font-weight: 700;
+        counter-reset: container 0;
+        transition: all 0.35s ease-in-out;
+
+        &.dimmed {
+          opacity: 0.7;
+          pointer-events: none;
+          transition: all 0.35s ease-in-out;
+        }
+
+        li {
+          position: relative;
+          margin-left: 35px;
+          margin-top: 55px;
+          counter-increment: container 1;
+          color: var(--secondaryColor);
+          border: 2px outset rgba(255, 255, 255, 0.7);
+          border-radius: 20px;
+          width: 350px;
+          padding: 10px 15px;
+          background-color: rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(3.5px);
+          -webkit-backdrop-filter: blur(3.5px);
+          text-shadow: 0 0 7px rgba(0, 0, 0, 1);
+          box-shadow: 0 3.5px 7px rgba(0, 0, 0, 1);
+          transition: all 0.35s ease-in-out;
+
+          &.active {
+            background: #00ffcc;
+            color: #000;
+          }
+          &.current {
+            border: 1px solid #00ffcc;
+          }
+
+          &::before {
+            content: counter(container);
+            line-break: 35px;
+            text-align: center;
+            position: absolute;
+            height: 23.5px;
+            width: 23.5px;
+            border: 3.5px solid var(--secondaryColor);
+            border-radius: 50%;
+            left: -35px;
+            top: 7px;
+            z-index: 10;
+            background-color: var(--primaryColor);
+            text-shadow: 0 0 7px rgba(0, 0, 0, 1);
+            box-shadow: 0 3.5px 7px rgba(0, 0, 0, 1);
+            transition: all 0.35s ease-in-out;
+          }
+
+          &::after {
+            content: "";
+            position: absolute;
+            height: 80px;
+            width: 3.5px;
+            background-color: var(--secondaryColor);
+            z-index: 1;
+            left: -22px;
+            top: -63px;
+            transition: all 0.35s ease-in-out;
+          }
+
+          &.active {
+            color: white;
+            background-color: var(--primaryColor);
+            border: 2px solid white;
+            box-shadow: 0 0px 13.5px rgb(255, 255, 255);
+            text-shadow: 0 0 7px white;
+            transition: all 0.35s ease-in-out;
+
+            &::after {
+              background: white;
+              box-shadow: 0 0px 7px rgb(255, 255, 255);
+              transition: all 0.35s ease-in-out;
+            }
+
+            &::before {
+              color: var(--primaryColor);
+              border: 3.5px solid white;
+              box-shadow: 0 0px 7px rgb(255, 255, 255);
+              text-shadow: 0 0 7px white;
+              background: greenyellow;
+              transition: 0.35s ease-in-out;
+            }
+          }
+
+          &:first-child:after {
+            display: none;
+            transition: all 0.35s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+
+  .billForm {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    transition: all 0.35s ease-in-out;
+
+    .billHeader {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: flex-end;
+      transition: all 0.35s ease-in-out;
+
+      .logoHeader {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        transition: all 0.35s ease-in-out;
+
+        .clientName {
+          font-size: 20px;
+          color: var(--primaryColor);
+          font-weight: 700;
+          margin-top: -12px;
+          transition: all 0.35s ease-in-out;
+        }
+
+        .meterNumber {
+          font-size: 12px;
+          color: var(--secondaryColor);
+          font-weight: 500;
+          margin-top: -7px;
+          padding-bottom: 2px;
+          -webkit-text-stroke: 0.35px var(--primaryColor);
+          transition: all 0.35s ease-in-out;
+        }
+      }
+
+      .logoside {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        transition: all 0.35s ease-in-out;
+
+        .voltara {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          text-align: left;
+          transition: all 0.35s ease-in-out;
+
+          .voltaraName {
+            font-size: 20px;
+            color: var(--primaryColor);
+            font-weight: 700;
+            margin-top: -12px;
+            transition: all 0.35s ease-in-out;
+          }
+
+          .voltaraSubText {
+            font-size: 12px;
+            color: var(--secondaryColor);
+            font-weight: 500;
+            margin-top: -7px;
+            padding-bottom: 2px;
+            -webkit-text-stroke: 0.35px var(--primaryColor);
+            transition: all 0.35s ease-in-out;
+          }
+        }
+
+        .voltaraLogo {
+          height: 70px;
+          width: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.35s ease-in-out;
+
+          .voltaraLogoImage {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            transition: all 0.35s ease-in-out;
+          }
+        }
+      }
+    }
+
+    .stepTransition {
+      animation: fadeSlide 0.35s ease-in-out;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.35s ease-in-out;
+
+      .form {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        padding-inline: 13.5px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: 7px;
+        transition: all 0.35s ease-in-out;
+
+        .debitReceipt {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: left;
+          justify-content: space-between;
+          gap: 7px;
+          padding-block: 20px 0;
+          transition: all 0.35s ease-in-out;
+
+          .receiptHeading {
+            align-self: flex-start;
+            color: var(--primaryColor);
+            transition: all 0.35s ease-in-out;
+          }
+
+          .receiptTable {
+            border-block: 2px solid var(--secondaryColor);
+            padding: 13.5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            gap: 13.5px;
+            transition: all 0.35s ease-in-out;
+
+            .receiptTableBody {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              width: 100%;
+              gap: 7px;
+              color: var(--inputColor);
+              transition: all 0.35s ease-in-out;
+
+              h4 {
+                color: var(--primaryColor);
+                transition: all 0.35s ease-in-out;
+              }
+
+              .leftMid {
+                flex-basis: 50%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-align: left;
+                font-weight: 555;
+                gap: 7px;
+                transition: all 0.35s ease-in-out;
+              }
+
+              .rightAmount {
+                flex-basis: 50%;
+                padding-inline: 35px 0;
+                width: 100%;
+                text-align: right;
+                transition: all 0.35s ease-in-out;
+
+                .tableText {
+                  width: 100%;
+                  transition: all 0.35s ease-in-out;
+
+                  .billInput {
+                    width: 100%;
+                    position: relative;
+                    display: flex;
+                    flex-wrap: wrap;
+                    transition: all 0.7s ease-in-out;
+
+                    .paymentIcon {
+                      display: block;
+                      position: absolute;
+                      font-size: 20px;
+                      color: var(--primaryColor);
+                      transition: all 0.7s ease-in-out;
+                      left: 13.5px;
+                      top: 50%;
+                      transform: translateY(-50%);
+                    }
+
+                    .billLabel {
+                      position: absolute;
+                      top: 50%;
+                      left: 40px;
+                      transform: translateY(-50%);
+                      color: var(--primaryColor);
+                      font-size: 13.5px;
+                      font-weight: 555;
+                      transition: all 0.7s ease-in-out;
+                      pointer-events: none;
+                      opacity: 1;
+                    }
+
+                    input[type="number"]:not(:placeholder-shown),
+                    input[type="number"]:focus {
+                      &::placeholder {
+                        opacity: 0;
+                        transition: all 0.07s ease-in-out;
+                      }
+
+                      ~ .billLabel {
+                        top: -0px;
+                        left: 20px;
+                        color: var(--primaryColor);
+                        font-size: 12px;
+                        background-color: var(--whiteColor);
+                        padding: 0 7px;
+                        opacity: 1;
+                        transition: all 0.07s ease-in-out;
+
+                        ~ .paymentIcon {
+                          color: var(--primaryColor);
+                          transition: all 0.07s ease-in-out;
+                        }
+                      }
+                    }
+
+                    input[type="number"]:not(:placeholder-shown):valid {
+                      box-shadow: 0 0 5px 1px yellowgreen;
+                      border: 2px solid yellowgreen;
+                      transition: all 0.07s ease-in-out;
+
+                      ~ .billLabel {
+                        color: yellowgreen;
+                        text-shadow: 0 0 7px 7px yellowgreen;
+                        transition: all 0.07s ease-in-out;
+                      }
+                    }
+
+                    input[type="number"]:not(:placeholder-shown):invalid {
+                      box-shadow: 0 0 5px 1px red;
+                      border: 2px solid red;
+                      transition: all 0.07s ease-in-out;
+
+                      ~ .billLabel {
+                        color: red;
+                        text-shadow: 0 0 7px 7px red;
+                        transition: all 0.07s ease-in-out;
+                      }
+                    }
+
+                    #tableField {
+                      font-weight: 555;
+                      font-size: 13.5px;
+                      padding: 13.5px 40px;
+                      color: var(--inputColor);
+                      border: 2px solid var(--secondaryColor);
+                      border-radius: 20px;
+                      transition: all 0.7s ease-in-out;
+                      background-color: white;
+                      outline: none;
+                      width: 100%;
+                      cursor: pointer;
+
+                      &::placeholder {
+                        opacity: 0;
+                        color: var(--secondaryColor);
+                        transition: all 0.7s ease-in-out;
+                        font-size: 13.5px;
+                      }
+
+                      &:hover {
+                        border: 2px solid var(--primaryColor);
+                        color: var(--primaryColor);
+                        transition: all 0.7s ease-in-out;
+
+                        ~ .billLabel,
+                        ~ .paymentIcon {
+                          color: var(--primaryColor);
+                          transition: all 0.7s ease-in-out;
+                        }
+
+                        &::placeholder {
+                          color: var(--secondaryColor);
+                          transition: all 0.7s ease-in-out;
+                        }
+                      }
+
+                      &:focus {
+                        border: 2px solid var(--primaryColor);
+                        color: var(--primaryColor);
+                        transition: all 0.7s ease-in-out;
+
+                        ~ .billLabel {
+                          top: -0px;
+                          left: 20px;
+                          color: var(--primaryColor);
+                          font-size: 12px;
+                          transition: all 0.07s ease-in-out;
+                          background-color: var(--whiteColor);
+                          padding: 0 7px;
+                          opacity: 1;
+                        }
+
+                        ~ .paymentIcon {
+                          color: var(--primaryColor);
+                          transition: all 0.7s ease-in-out;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .autoAllocate {
+            align-self: flex-end;
+            width: 44%;
+            transition: all 0.35s ease-in-out;
+          }
+        }
+
+        .progressBtns {
+          display: flex;
+          width: 100%;
+          align-items: center;
+          justify-content: space-between;
+          gap: 35px;
+          margin-top: 13.5px;
+          transition: all 0.35s ease-in-out;
+
+          .progressBtn {
+            width: 100%;
+            transition: all 0.35s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes strokeCircle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes strokeCheck {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}

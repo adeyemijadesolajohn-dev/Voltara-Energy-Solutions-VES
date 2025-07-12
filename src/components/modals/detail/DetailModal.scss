@@ -1,0 +1,184 @@
+.detailModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.35s ease;
+  transition: all 0.35s ease-in-out;
+}
+
+.detailModal {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px outset rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(3.5px);
+  padding: 3.5rem;
+  width: 90%;
+  max-width: 700px;
+  border-radius: 13.5px;
+  box-shadow: 0 7px 35px rgba(0, 0, 0, 0.7);
+  animation: slideUp 0.35s ease;
+  position: relative;
+  transition: all 0.35s ease-in-out;
+
+  &.slideUp {
+    animation: slideUp 0.35s ease;
+    transition: all 0.35s ease-in-out;
+  }
+
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.35s ease-in-out;
+
+    h3 {
+      font-size: 1.35rem;
+      display: flex;
+      align-items: center;
+      color: var(--whiteColor);
+      text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
+      gap: 0.35rem;
+      transition: all 0.35s ease-in-out;
+
+      .modalIcon {
+        font-size: 1.35rem;
+        color: var(--whiteColor);
+        transition: all 0.35s ease-in-out;
+      }
+    }
+
+    .closeBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: transparent;
+      border: 2px solid transparent;
+      border-radius: 50px;
+      padding: 3.5px;
+      font-size: 35px;
+      font-weight: 1000;
+      color: var(--whiteColor);
+      cursor: pointer;
+      transition: all 0.35s ease-in-out;
+
+      .detailIcon {
+        display: block;
+        transition: all 0.35s ease-in-out;
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 2px outset rgba(255, 255, 255, 0.7);
+        box-shadow: inset 0 3.5px 7px rgba(0, 0, 0, 0.2),
+          0 3.5px 7px rgba(0, 0, 0, 0.7);
+        transition: all 0.35s ease-in-out;
+
+        .detailIcon {
+          color: red;
+          animation-name: spin;
+          animation-duration: 5000ms;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+          transform-origin: center center;
+          transition: all 0.35s ease-in-out;
+
+          @keyframes spin {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .modalBody {
+    margin-top: 20px;
+    max-height: 55vh;
+    overflow-y: auto;
+    padding-right: 3.5px;
+    transition: all 0.35s ease-in-out;
+
+    .modalItem {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 2px dashed var(--secondaryColor);
+      transition: all 0.35s ease-in-out;
+
+      .modalLabel {
+        font-weight: 700;
+        color: #ffffff;
+        text-transform: capitalize;
+        transition: all 0.35s ease-in-out;
+      }
+
+      .modalValue {
+        color: #ffffff;
+        text-align: right;
+        transition: all 0.35s ease-in-out;
+      }
+    }
+  }
+
+  .modalFooter {
+    margin-top: 1.35rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.35s ease-in-out;
+
+    button {
+      padding: 7px 13.5px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      border: 2px solid transparent;
+      background-color: var(--primaryColor);
+      color: white;
+      text-shadow: 0 0 7px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 -2px 3.5px rgba(0, 0, 0, 0.7);
+      transition: all 0.35s ease-in-out;
+
+      &:hover {
+        background-color: var(--whiteColor);
+        border: 2px solid var(--primaryColor);
+        color: var(--primaryColor);
+        transform: scale(0.9);
+        transition: all 0.35s ease-in-out;
+      }
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    background: rgba(0, 0, 0, 0);
+  }
+  to {
+    background: rgba(0, 0, 0, 0.55);
+  }
+}
