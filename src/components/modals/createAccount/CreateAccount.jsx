@@ -15,9 +15,6 @@ const CreateAccount = ({ isOpen, onClose, userId, authToken }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // The base URL is now handled by the Vite proxy
-  // const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
   const steps = [
     "Contact Details",
     "Identity Verification",
@@ -161,7 +158,7 @@ const CreateAccount = ({ isOpen, onClose, userId, authToken }) => {
     };
 
     try {
-      // The API call now uses the relative path, which is proxied by Vite
+      // The API call uses the relative path, which is proxied by Vite
       const response = await fetch(`/api/customer`, {
         method: "POST",
         headers: {

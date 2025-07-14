@@ -5,7 +5,6 @@ import CreateAccount from "../modals/createAccount/CreateAccount";
 import { Icons } from "../../data/Assets";
 import "./Navbar.scss";
 
-// The Navbar component now accepts userId and authToken as props
 const Navbar = ({ userId, authToken }) => {
   const { toggleSidebar, isSidebarOpen } = useContext(SidebarContext);
   const isTogglerVisible = useSmartNavbarVisibility({}, isSidebarOpen);

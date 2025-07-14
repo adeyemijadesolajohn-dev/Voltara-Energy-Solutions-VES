@@ -13,7 +13,7 @@ const Account = () => {
 
   // State for the logged-in user's information
   const [userId, setUserId] = useState(id);
-  // In a real app, this would be set after a successful login
+  // this would be set after a successful login
   const [authToken, setAuthToken] = useState("your-auth-token-from-login");
 
   return (
