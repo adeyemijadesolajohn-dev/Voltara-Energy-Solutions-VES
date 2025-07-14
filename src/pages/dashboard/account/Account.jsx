@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Account.scss";
 import { useParams } from "react-router-dom";
 import Sidebar from "../../../components/sidebar/Sidebar";
@@ -10,6 +10,11 @@ import { Public, Icons } from "../../../data/Assets";
 
 const Account = () => {
   const { id } = useParams(); // Get the ID from the URL
+
+  // State for the logged-in user's information
+  const [userId, setUserId] = useState(id);
+  // In a real app, this would be set after a successful login
+  const [authToken, setAuthToken] = useState("your-auth-token-from-login");
 
   return (
     <div className="accountPage">
@@ -30,7 +35,7 @@ const Account = () => {
 
         <div className="accountContainer">
           <NavBadge />
-          <Navbar />
+          <Navbar userId={userId} authToken={authToken} />
 
           <div className="accountWidgets">
             <Widget type="serviceType" />

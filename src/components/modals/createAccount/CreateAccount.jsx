@@ -8,11 +8,15 @@ import Step4 from "./steps/Step4";
 import Step5 from "./steps/Step5";
 import Step6 from "./steps/Step6";
 
-const CreateAccount = ({ isOpen, onClose }) => {
+const CreateAccount = ({ isOpen, onClose, userId, authToken }) => {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({});
   const [isComplete, setIsComplete] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // The base URL is now handled by the Vite proxy
+  // const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const steps = [
     "Contact Details",
@@ -25,8 +29,11 @@ const CreateAccount = ({ isOpen, onClose }) => {
 
   const handleNext = () => {
     if (!validateStep()) return;
-    if (step < steps.length - 1) setStep(step + 1);
-    else setIsComplete(true);
+    if (step < steps.length - 1) {
+      setStep(step + 1);
+    } else {
+      handleSubmit();
+    }
   };
 
   const handlePrev = () => {
@@ -100,6 +107,88 @@ const CreateAccount = ({ isOpen, onClose }) => {
     }
   };
 
+  const handleSubmit = async () => {
+    setLoading(true);
+    setError("");
+
+    if (!userId || !authToken) {
+      setError(
+        "User ID and authentication token are missing. Please log in again."
+      );
+      setLoading(false);
+      return;
+    }
+
+    const userTypeMapping = {
+      Tenant: 0,
+      Landlord: 1,
+      Realtor: 2,
+      Government: 3,
+    };
+
+    const tariffTypeMapping = {
+      Residential: 1,
+      Commercial: 2,
+      Estate: 3,
+      Government: 4,
+    };
+
+    const payload = {
+      customer_type_id: userTypeMapping[formData.userType],
+      name: formData.name,
+      address: `${formData.address}, ${formData.lga}, ${formData.state}`,
+      phone_no: formData.phone,
+      email: formData.email,
+      user_id: userId,
+
+      meters: [
+        {
+          meter_number: parseInt(formData.meterId, 10),
+          meter_type: formData.meterType,
+          meter_make: formData.serviceType,
+        },
+      ],
+
+      accounts: [
+        {
+          account_number: parseInt(
+            String(tariffTypeMapping[formData.tariffType]).padStart(10, "0"),
+            10
+          ),
+          balance: 0,
+        },
+      ],
+    };
+
+    try {
+      // The API call now uses the relative path, which is proxied by Vite
+      const response = await fetch(`/api/customer`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || "Failed to create customer account."
+        );
+      }
+
+      console.log("Customer created successfully:", await response.json());
+      setIsComplete(true);
+    } catch (err) {
+      console.error("API error:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const renderStep = () => {
     const props = { formData, setFormData, error };
     switch (step) {
@@ -162,6 +251,7 @@ const CreateAccount = ({ isOpen, onClose }) => {
               </button>
 
               {error && <p className="formError">{error}</p>}
+              {loading && <p className="formLoading">Submitting...</p>}
 
               <button
                 className="progressBtn"
@@ -170,13 +260,20 @@ const CreateAccount = ({ isOpen, onClose }) => {
                 style={{
                   color: step === steps.length - 1 ? "yellowgreen" : "",
                 }}
+                disabled={loading}
               >
-                {step === steps.length - 1 ? (
+                {loading ? (
+                  "..."
+                ) : step === steps.length - 1 ? (
                   <Icons.Checkmark className="btnIcon" />
                 ) : (
                   <Icons.Next className="btnIcon" />
                 )}
-                {step === steps.length - 1 ? "Submit" : "Next"}
+                {loading
+                  ? "Submitting..."
+                  : step === steps.length - 1
+                  ? "Submit"
+                  : "Next"}
               </button>
             </div>
           </form>
@@ -201,7 +298,11 @@ const CreateAccount = ({ isOpen, onClose }) => {
                   d="M14.1 27.2l7.1 7.2 16.7-16.8"
                 />
               </svg>
-              <p>Congratulations! Account created.</p>
+              <p>
+                **Congratulations, {formData.name}! Your Account has been
+                Created.**
+              </p>
+              <p>Your Customer ID would be sent to your mail.</p>
             </div>
           </div>
         )}
